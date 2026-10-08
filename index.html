@@ -144,57 +144,58 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative py-16 sm:py-24 lg:py-32 border-b border-gray-100 bg-gray-900 text-white overflow-hidden min-h-[550px] flex items-center">
-        <!-- Hero Background Image & Gradient Overlay (Positioned to reveal head and shirt) -->
+    <section class="relative py-12 sm:py-20 lg:py-28 border-b border-gray-100 bg-gray-900 text-white overflow-hidden min-h-[550px] flex items-center">
+        <!-- Hero Background Image & Gradient Overlay (Positioned far right on mobile) -->
         <div class="absolute inset-0 z-0">
-            <img id="heroBgImg" src="image1.jpg" alt="Hero Background" class="w-full h-full object-cover object-[90%_20%] sm:object-[95%_25%] opacity-70">
-            <div class="absolute inset-0 bg-gradient-to-r from-brandDark/95 via-brandDark/75 sm:via-brandDark/50 to-transparent"></div>
+            <img id="heroBgImg" src="image1.jpg" alt="Hero Background" class="w-full h-full object-cover object-[100%_0%] sm:object-[85%_20%] opacity-70">
+            <div class="absolute inset-0 bg-gradient-to-r from-brandDark/95 via-brandDark/80 sm:via-brandDark/60 to-transparent"></div>
         </div>
 
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div class="max-w-md lg:max-w-lg text-left space-y-6">
+            <!-- Constrained content column on mobile to keep left space open for the background subject -->
+            <div class="max-w-[78%] sm:max-w-md lg:max-w-lg text-left space-y-4 sm:space-y-6">
                 
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brandYellow/20 border border-brandYellow text-brandYellow font-bold text-xs sm:text-sm uppercase tracking-wide backdrop-blur-sm">
+                <div class="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-brandYellow/20 border border-brandYellow text-brandYellow font-bold text-[11px] sm:text-sm uppercase tracking-wide backdrop-blur-sm">
                     <i class="fas fa-star text-brandYellow"></i> Your One Stop Shop For Printing
                 </div>
                 
-                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-tight drop-shadow-lg">
+                <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black text-white leading-tight drop-shadow-lg">
                     Bring Your Visuals To Life With <span class="text-brandYellow">Limitless</span> Precision
                 </h1>
                 
-                <p class="text-sm sm:text-lg text-gray-100 drop-shadow">
+                <p class="text-xs sm:text-base text-gray-100 drop-shadow leading-relaxed">
                     From custom T-shirts, X-Banners, Logo Stitching, vehicle wraps, and large format banners — we deliver high-impact print quality shipped right across Jamaica.
                 </p>
 
-                <!-- Main Order & Explore Buttons (Left Aligned) -->
-                <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-3.5 pt-2">
-                    <a href="#products" class="w-full sm:w-auto bg-brandRed hover:bg-red-700 text-white font-black text-base sm:text-lg px-7 py-3.5 rounded-xl shadow-xl hover:shadow-2xl transition transform hover:-translate-y-0.5 text-center">
-                        <i class="fas fa-shopping-cart mr-2"></i> ORDER NOW
+                <!-- Compact Order & Explore Buttons (Shifted Left) -->
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-start gap-2.5 pt-1">
+                    <a href="#products" class="w-[82%] sm:w-auto bg-brandRed hover:bg-red-700 text-white font-black text-xs sm:text-base px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl shadow-lg transition text-center flex items-center justify-center gap-1.5">
+                        <i class="fas fa-shopping-cart"></i> ORDER NOW
                     </a>
-                    <a href="#products" class="w-full sm:w-auto bg-brandBlue hover:bg-blue-800 text-white font-black text-base sm:text-lg px-7 py-3.5 rounded-xl shadow-xl hover:shadow-2xl transition transform hover:-translate-y-0.5 text-center">
-                        <i class="fas fa-th-large mr-2"></i> EXPLORE PRODUCTS
+                    <a href="#products" class="w-[82%] sm:w-auto bg-brandBlue hover:bg-blue-800 text-white font-black text-xs sm:text-base px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl shadow-lg transition text-center flex items-center justify-center gap-1.5">
+                        <i class="fas fa-th-large"></i> EXPLORE PRODUCTS
                     </a>
                 </div>
 
-                <!-- Call & WhatsApp Action Cards (Left Aligned) -->
-                <div class="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 border-t border-white/20">
-                    <a href="tel:8766174659" class="p-3 rounded-xl bg-brandBlue/90 hover:bg-brandBlue border border-blue-400/50 text-white transition flex items-center gap-3 shadow-lg">
-                        <div class="w-10 h-10 rounded-full bg-white text-brandBlue flex items-center justify-center font-bold flex-shrink-0">
+                <!-- Call & WhatsApp Action Cards (Compact & Shifted Left) -->
+                <div class="pt-3 space-y-2 border-t border-white/20 max-w-[85%] sm:max-w-xs">
+                    <a href="tel:8766174659" class="p-2.5 rounded-xl bg-brandBlue/90 hover:bg-brandBlue border border-blue-400/50 text-white transition flex items-center gap-2.5 shadow-md">
+                        <div class="w-8 h-8 rounded-full bg-white text-brandBlue flex items-center justify-center font-bold text-xs flex-shrink-0">
                             <i class="fas fa-phone"></i>
                         </div>
                         <div class="text-left">
-                            <span class="text-xs text-brandYellow uppercase font-bold block">Main Office Line</span>
-                            <span class="font-bold text-white text-sm sm:text-base">(876) 617-4659</span>
+                            <span class="text-[10px] text-brandYellow uppercase font-bold block leading-none">Main Office Line</span>
+                            <span class="font-bold text-white text-xs sm:text-sm">(876) 617-4659</span>
                         </div>
                     </a>
 
-                    <a href="https://wa.me/18763702108" target="_blank" class="p-3 rounded-xl bg-brandRed/90 hover:bg-brandRed border border-red-400/50 text-white transition flex items-center gap-3 shadow-lg">
-                        <div class="w-10 h-10 rounded-full bg-white text-brandRed flex items-center justify-center font-bold flex-shrink-0">
-                            <i class="fab fa-whatsapp text-lg"></i>
+                    <a href="https://wa.me/18763702108" target="_blank" class="p-2.5 rounded-xl bg-brandRed/90 hover:bg-brandRed border border-red-400/50 text-white transition flex items-center gap-2.5 shadow-md">
+                        <div class="w-8 h-8 rounded-full bg-white text-brandRed flex items-center justify-center font-bold text-xs flex-shrink-0">
+                            <i class="fab fa-whatsapp text-sm"></i>
                         </div>
                         <div class="text-left">
-                            <span class="text-xs text-brandYellow uppercase font-bold block">WhatsApp Line</span>
-                            <span class="font-bold text-white text-sm sm:text-base">(876) 370-2108</span>
+                            <span class="text-[10px] text-brandYellow uppercase font-bold block leading-none">WhatsApp Line</span>
+                            <span class="font-bold text-white text-xs sm:text-sm">(876) 370-2108</span>
                         </div>
                     </a>
                 </div>
