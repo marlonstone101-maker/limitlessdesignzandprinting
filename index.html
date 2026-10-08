@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limitless Designz & Printing Ltd | Falmouth, Jamaica</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandBlue: '#0022d4',
+                        brandRed: '#e61c24',
+                        brandYellow: '#ffd600',
+                        brandDark: '#0a0d1a'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .yellow-accent-stripe {
+            background: linear-gradient(90deg, #ffd600 0%, #e61c24 50%, #0022d4 100%);
+            height: 5px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+    <!-- Top Accent Bar -->
+    <div class="yellow-accent-stripe w-full"></div>
+
+    <!-- Announcement Bar -->
+    <div class="bg-brandDark text-white text-xs sm:text-sm py-2 px-4">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left">
+            <div class="flex items-center gap-2">
+                <span class="inline-block w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                <span><strong>Open Hours:</strong> Mon-Fri 9am-5pm | Sat 10am-4pm | Sun Closed</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span>📍 24 Tharpe Street, Falmouth, Jamaica</span>
+                <a href="https://www.instagram.com/limitlessdesignzandprinting" target="_blank" class="hover:text-brandYellow transition text-sm">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar (Updated Header to Blue with White, Yellow, Red text) -->
+    <nav class="sticky top-0 z-40 bg-brandBlue shadow-lg border-b border-blue-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo Slot -->
+                <a href="#" class="flex items-center gap-3">
+                    <div class="w-14 h-14 rounded-full bg-white border-2 border-brandYellow flex items-center justify-center text-white font-bold text-xs text-center p-1 overflow-hidden shadow">
+                        <img src="logo.png" alt="Limitless Logo" class="w-full h-full object-cover rounded-full" id="siteLogo">
+                    </div>
+                    <div>
+                        <span class="text-xl sm:text-2xl font-black text-white tracking-tight block uppercase leading-none">Limitless</span>
+                        <span class="text-xs font-bold text-brandYellow tracking-widest block">DESIGNZ & PRINTING LTD</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav & Actions -->
+                <div class="hidden lg:flex items-center space-x-6">
+                    <a href="#products" class="font-semibold text-white hover:text-brandYellow transition">Products</a>
+                    <a href="#knutsford" class="font-semibold text-white hover:text-brandYellow transition">Shipping</a>
+                    <a href="#showcase" class="font-semibold text-white hover:text-brandYellow transition">Showcase</a>
+                    <a href="#contact" class="font-semibold text-white hover:text-brandYellow transition">Location</a>
+                    
+                    <!-- Admin Portal Button inside Menu -->
+                    <button onclick="openAdminModal()" class="text-xs bg-brandYellow hover:bg-yellow-400 text-brandDark font-black px-3 py-2 rounded-lg flex items-center gap-2 shadow">
+                        <i class="fas fa-user-lock text-brandRed"></i> Client Admin
+                    </button>
+
+                    <!-- Contact Action Buttons -->
+                    <a href="tel:8766174659" class="bg-brandRed hover:bg-red-700 text-white font-bold px-4 py-2 rounded-full shadow transition flex items-center gap-2">
+                        <i class="fas fa-phone-alt"></i> Call (876) 617-4659
+                    </a>
+                    <a href="https://wa.me/18763702108" target="_blank" class="bg-green-500 hover:bg-green-600 text-white font-bold px-4 py-2 rounded-full shadow transition flex items-center gap-2">
+                        <i class="fab fa-whatsapp text-lg"></i> WhatsApp Us
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="flex lg:hidden items-center gap-2">
+                    <button onclick="openAdminModal()" class="text-xs bg-brandYellow text-brandDark font-black px-2.5 py-1.5 rounded">
+                        <i class="fas fa-lock text-brandRed"></i> Admin
+                    </button>
+                    <button id="mobileMenuBtn" class="text-white text-2xl p-2 focus:outline-none">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden lg:hidden border-t border-blue-800 bg-brandBlue px-4 pt-2 pb-6 space-y-3">
+            <a href="#products" class="block font-semibold text-white py-1">Products & Services</a>
+            <a href="#knutsford" class="block font-semibold text-white py-1">Knutsford Express Shipping</a>
+            <a href="#showcase" class="block font-semibold text-white py-1">Work Showcase</a>
+            <a href="#contact" class="block font-semibold text-white py-1">Location & Hours</a>
+            <div class="pt-3 border-t border-blue-800 flex flex-col gap-2">
+                <a href="tel:8766174659" class="bg-brandRed text-white text-center font-bold py-2.5 rounded-lg">
+                    <i class="fas fa-phone-alt mr-2"></i> Call Us Directly
+                </a>
+                <a href="https://wa.me/18763702108" target="_blank" class="bg-green-500 text-white text-center font-bold py-2.5 rounded-lg">
+                    <i class="fab fa-whatsapp mr-2"></i> WhatsApp (876) 370-2108
+                </a>
+                <a href="https://www.instagram.com/limitlessdesignzandprinting" target="_blank" class="bg-brandYellow text-brandDark text-center font-bold py-2.5 rounded-lg">
+                    <i class="fab fa-instagram mr-2"></i> Visit Instagram
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section (With Background Image Support) -->
+    <section class="relative py-16 lg:py-24 border-b border-gray-100 bg-gray-900 text-white overflow-hidden min-h-[500px] flex items-center">
+        <!-- Hero Background Image & Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img id="heroBgImg" src="image1.jpg" alt="Hero Background" class="w-full h-full object-cover opacity-35">
+            <div class="absolute inset-0 bg-gradient-to-r from-brandDark/90 via-brandDark/80 to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                
+                <!-- Left Column Text Content -->
+                <div class="space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brandYellow/20 border border-brandYellow text-brandYellow font-bold text-xs uppercase tracking-wide">
+                        <i class="fas fa-star text-brandYellow"></i> Your One Stop Shop For Printing
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight">
+                        Bring Your Visuals To Life With <span class="text-brandYellow">Limitless</span> Precision
+                    </h1>
+                    
+                    <p class="text-lg text-gray-200 max-w-xl mx-auto lg:mx-0">
+                        From custom T-shirts, X-Banners, Logo Stitching, vehicle wraps, and large format banners — we deliver high-impact print quality shipped right across Jamaica.
+                    </p>
+
+                    <!-- Call To Actions -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#products" class="w-full sm:w-auto bg-brandRed hover:bg-red-700 text-white font-black text-lg px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-0.5 text-center">
+                            <i class="fas fa-shopping-cart mr-2"></i> ORDER NOW
+                        </a>
+                        <a href="#products" class="w-full sm:w-auto bg-brandBlue hover:bg-blue-800 text-white font-black text-lg px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-0.5 text-center">
+                            <i class="fas fa-th-large mr-2"></i> EXPLORE PRODUCTS
+                        </a>
+                    </div>
+
+                    <!-- Call & WhatsApp Section (Blue Call Line, Red WhatsApp Line, No White Backgrounds) -->
+                    <div class="pt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-left border-t border-white/20">
+                        <a href="tel:8766174659" class="p-3 rounded-xl bg-brandBlue/80 hover:bg-brandBlue border border-blue-400 text-white transition flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-white text-brandBlue flex items-center justify-center font-bold">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-brandYellow uppercase font-bold block">Main Office Line</span>
+                                <span class="font-bold text-white">(876) 617-4659</span>
+                            </div>
+                        </a>
+
+                        <a href="https://wa.me/18763702108" target="_blank" class="p-3 rounded-xl bg-brandRed/80 hover:bg-brandRed border border-red-400 text-white transition flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-white text-brandRed flex items-center justify-center font-bold">
+                                <i class="fab fa-whatsapp text-lg"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-brandYellow uppercase font-bold block">WhatsApp Line</span>
+                                <span class="font-bold text-white">(876) 370-2108</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Visual Hero Layout (Replaced 4 boxes with 1 Feature Image slot editable via Admin) -->
+                <div class="relative">
+                    <div class="absolute -inset-2 bg-gradient-to-r from-brandBlue via-brandYellow to-brandRed rounded-3xl blur-lg opacity-50"></div>
+                    <div class="relative bg-brandDark/60 p-3 rounded-3xl border border-white/20 shadow-2xl">
+                        <div class="rounded-2xl overflow-hidden bg-gray-900 h-80 sm:h-96 border border-white/10 relative group">
+                            <img id="featureHeroImg" src="https://via.placeholder.com/800x600/0022d4/FFFFFF?text=Featured+Print+Work" alt="Featured Print Showcase" class="w-full h-full object-cover">
+                            <span class="absolute bottom-3 left-3 bg-brandRed text-white text-xs font-black px-3 py-1.5 rounded-lg shadow">
+                                Featured Work
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Knutsford Express Shipping Section -->
+    <section id="knutsford" class="py-12 bg-gray-100 border-y border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-md border-2 border-brandBlue/20 flex flex-col md:flex-row items-center justify-between gap-8">
+                
+                <div class="flex items-center gap-6">
+                    <!-- Knutsford Logo Placeholder Slot -->
+                    <div class="w-32 h-20 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300 flex flex-col items-center justify-center p-2 text-center flex-shrink-0">
+                        <img src="image3.jpg" alt="Knutsford Express Logo" class="max-h-full max-w-full object-contain" id="knutsfordLogo">
+                        <span class="text-[9px] text-gray-400 mt-1 font-bold"></span>
+                    </div>
+
+                    <div class="space-y-1">
+                        <div class="inline-flex items-center gap-2 text-xs font-black text-brandRed tracking-wide uppercase">
+                            <i class="fas fa-truck-fast"></i> Islandwide Delivery Guaranteed
+                        </div>
+                        <h3 class="text-2xl font-black text-gray-900">We Ship Islandwide via Knutsford Express!</h3>
+                        <p class="text-sm text-gray-600">Fast, safe, and dependable delivery to all parishes across Jamaica directly to your nearest Knutsford Express terminal.</p>
+                    </div>
+                </div>
+
+                <div class="flex-shrink-0 w-full md:w-auto">
+                    <a href="https://wa.me/18763702108?text=Hi%2C%20I%20want%20to%20inquire%20about%20Knutsford%20Express%20shipping%20rates." target="_blank" class="block text-center bg-brandBlue hover:bg-blue-800 text-white font-bold px-6 py-3 rounded-xl transition shadow">
+                        <i class="fas fa-boxes-packing mr-2"></i> Inquire Shipping Rates
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Products & Interactive Catalog Section -->
+    <section id="products" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+            
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <span class="text-brandRed font-black uppercase text-sm tracking-wider">Quality Printing Services</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-gray-900">Featured Products & Showcase</h2>
+                <p class="text-gray-600">Select any product to start an instant order with direct bank receipt upload features.</p>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Products loaded dynamically via JS -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Bank Transfer & Order Modal -->
+    <div id="orderModal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto shadow-2xl relative">
+            <button onclick="closeOrderModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="border-b border-gray-100 pb-3">
+                <h3 class="text-xl font-black text-brandBlue" id="modalProductTitle">Place Your Print Order</h3>
+                <p class="text-xs text-gray-500">Complete payment via Bank Transfer and submit your order details.</p>
+            </div>
+
+            <!-- Bank Transfer Information -->
+            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm space-y-2">
+                <div class="font-bold text-brandBlue flex items-center gap-2">
+                    <i class="fas fa-university"></i> Bank Transfer Account Details
+                </div>
+                <div class="text-xs text-gray-700 space-y-1">
+                    <p><strong>Bank Name:</strong> National Commercial Bank (NCB)</p>
+                    <p><strong>Account Name:</strong> Limitless Designz & Printing Ltd</p>
+                    <p><strong>Account Number:</strong> 123-456-7890</p>
+                    <p><strong>Branch:</strong> Falmouth Branch</p>
+                    <p><strong>Account Type:</strong> Business Checking</p>
+                </div>
+            </div>
+
+            <!-- Order Form -->
+            <form id="orderForm" onsubmit="handleOrderSubmit(event)" class="space-y-3">
+                <input type="hidden" id="selectedProductName">
+                
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Your Full Name</label>
+                    <input type="text" required id="customerName" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-brandBlue">
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Phone Number</label>
+                        <input type="tel" required id="customerPhone" placeholder="(876) 000-0000" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-brandBlue">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Pickup / Shipping</label>
+                        <select id="shippingMethod" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-brandBlue">
+                            <option value="Knutsford Express">Knutsford Express</option>
+                            <option value="In-Store Pickup (Falmouth)">In-Store Pickup</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Upload Payment Receipt</label>
+                    <input type="file" required id="receiptFile" accept="image/*" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brandBlue file:text-white hover:file:bg-blue-800">
+                    <span class="text-[10px] text-gray-400 block mt-1">Please attach proof of payment/receipt image.</span>
+                </div>
+
+                <button type="submit" class="w-full bg-brandRed hover:bg-red-700 text-white font-bold py-3 rounded-xl transition shadow">
+                    <i class="fab fa-whatsapp mr-2"></i> Submit Order & Receipt via WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Single Showcase Image Section (Exact fit, no extra empty outer block) -->
+    <section id="showcase" class="py-12 bg-gray-50 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+            <div class="text-center max-w-xl mx-auto">
+                <span class="text-brandBlue font-black uppercase text-xs tracking-wider">Our Standards</span>
+                <h2 class="text-2xl sm:text-3xl font-black text-gray-900 mt-0.5">Quality Showcase</h2>
+                <p class="text-gray-600 text-xs mt-1">A glimpse at our high-grade machinery and print production standard.</p>
+            </div>
+
+            <!-- Tight-fit image wrapper without excess blank spacing -->
+            <div class="max-w-sm sm:max-w-md mx-auto flex justify-center">
+                <div class="rounded-2xl overflow-hidden shadow-lg border border-gray-200 bg-white">
+                    <img id="showcaseImg" src="image2.jpg" alt="Showcase Image" class="w-full h-auto max-h-[500px] object-contain block">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Portal Modal (Client Only Access) -->
+    <div id="adminModal" class="fixed inset-0 bg-black/70 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 space-y-6 max-h-[90vh] overflow-y-auto shadow-2xl relative">
+            <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <!-- PIN Gate -->
+            <div id="adminAuthGate" class="space-y-4 text-center py-6">
+                <div class="w-16 h-16 rounded-full bg-brandRed/10 text-brandRed flex items-center justify-center mx-auto text-2xl">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h3 class="text-2xl font-black text-gray-900">Client Admin Access</h3>
+                <p class="text-sm text-gray-500">Enter your secure PIN code to manage catalog products, pricing, and hero image.</p>
+                
+                <div class="max-w-xs mx-auto space-y-3">
+                    <input type="password" id="adminPinInput" placeholder="Enter PIN (Default: 1234)" class="w-full px-4 py-3 border border-gray-300 rounded-xl text-center text-xl tracking-widest focus:outline-none focus:border-brandBlue">
+                    <button onclick="authenticateAdmin()" class="w-full bg-brandBlue hover:bg-blue-800 text-white font-bold py-3 rounded-xl transition">
+                        Unlock Admin Panel
+                    </button>
+                    <p id="authError" class="text-xs text-brandRed font-bold hidden">Invalid Access PIN Code</p>
+                </div>
+            </div>
+
+            <!-- Admin Controls Content -->
+            <div id="adminControls" class="hidden space-y-6">
+                <div class="border-b border-gray-200 pb-3 flex justify-between items-center">
+                    <div>
+                        <h3 class="text-xl font-black text-brandBlue">Website Management Portal</h3>
+                        <p class="text-xs text-gray-500">Update hero images, product pricing, or remove catalog items.</p>
+                    </div>
+                    <span class="bg-green-100 text-green-800 text-xs font-bold px-2.5 py-1 rounded-full">Authenticated</span>
+                </div>
+
+                <!-- Update Hero Featured Image Form (Local File Upload) -->
+                <form onsubmit="handleUpdateHeroFeature(event)" class="bg-blue-50 p-4 rounded-xl border border-blue-200 space-y-3">
+                    <h4 class="font-bold text-sm text-brandBlue">Update Hero Featured Image</h4>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Upload Featured Image</label>
+                        <input type="file" id="newHeroFeatureFile" accept="image/*" required class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brandBlue file:text-white hover:file:bg-blue-800">
+                    </div>
+                    <button type="submit" class="w-full bg-brandBlue hover:bg-blue-800 text-white font-bold py-2 rounded-lg text-sm transition">
+                        <i class="fas fa-image mr-1"></i> Update Hero Featured Image
+                    </button>
+                </form>
+
+                <!-- Add Product Form (Local File Upload) -->
+                <form onsubmit="handleAddProduct(event)" class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-3">
+                    <h4 class="font-bold text-sm text-gray-800">Add New Product Item</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <input type="text" id="newProdName" placeholder="Product Name (e.g. Pull Up Banner)" required class="px-3 py-2 border rounded-lg text-sm">
+                        <input type="text" id="newProdPrice" placeholder="Price (e.g. $12,500 JMD)" required class="px-3 py-2 border rounded-lg text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Upload Product Image</label>
+                        <input type="file" id="newProdFile" accept="image/*" required class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brandBlue file:text-white hover:file:bg-blue-800">
+                    </div>
+                    <button type="submit" class="w-full bg-brandBlue hover:bg-blue-800 text-white font-bold py-2 rounded-lg text-sm transition">
+                        <i class="fas fa-plus-circle mr-1"></i> Add To Website Catalog
+                    </button>
+                </form>
+
+                <!-- Existing Items List -->
+                <div class="space-y-3">
+                    <h4 class="font-bold text-sm text-gray-800">Current Catalog Items</h4>
+                    <div id="adminProductList" class="space-y-2 max-h-60 overflow-y-auto pr-1">
+                        <!-- Dynamic list rendered here -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Location, Address & Footer Section (Updated Footer background to Blue) -->
+    <footer id="contact" class="bg-brandBlue text-white pt-16 pb-8 border-t-4 border-brandYellow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                
+                <!-- Company Bio & Logo -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-full bg-white border-2 border-brandYellow flex items-center justify-center font-bold text-xs">
+                            <img src="logo.png" alt="Limitless Logo Footer" class="w-full h-full object-cover rounded-full">
+                        </div>
+                        <div>
+                            <span class="text-xl font-black tracking-tight block text-white">LIMITLESS</span>
+                            <span class="text-xs text-brandYellow font-bold block">DESIGNZ & PRINTING LTD</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-blue-100 leading-relaxed">
+                        Your one-stop destination for full-color digital printing, custom signs, stitching, wraps, and high-impact branding.
+                    </p>
+                    <!-- Social Links -->
+                    <div class="flex items-center gap-3 pt-2">
+                        <a href="https://www.instagram.com/limitlessdesignzandprinting" target="_blank" class="w-9 h-9 rounded-full bg-white/20 hover:bg-brandRed flex items-center justify-center transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://wa.me/18763702108" target="_blank" class="w-9 h-9 rounded-full bg-white/20 hover:bg-green-500 flex items-center justify-center transition">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Contact Info Details -->
+                <div class="space-y-3">
+                    <h4 class="text-lg font-black text-brandYellow uppercase tracking-wider">Contact Details</h4>
+                    <ul class="space-y-2 text-sm text-blue-100">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-map-marker-alt text-brandRed mt-1"></i>
+                            <span>24 Tharpe Street, Falmouth, Jamaica</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-phone text-brandYellow"></i>
+                            <a href="tel:8766174659" class="hover:underline">(876) 617-4659</a>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fab fa-whatsapp text-green-400"></i>
+                            <a href="https://wa.me/18763702108" class="hover:underline">(876) 370-2108</a> / <a href="https://wa.me/18765906764" class="hover:underline">(876) 590-6764</a>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-clock text-brandYellow"></i>
+                            <span>Mon-Fri: 9am-5pm | Sat: 10am-4pm</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Interactive Google Map Location Card -->
+                <div class="space-y-3">
+                    <h4 class="text-lg font-black text-brandYellow uppercase tracking-wider">Our Location</h4>
+                    <a href="https://maps.google.com/?q=24+Tharpe+Street,+Falmouth,+Jamaica" target="_blank" class="block group relative rounded-xl overflow-hidden border-2 border-white/30 bg-blue-900 h-40 shadow-lg">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.504938210304!2d-77.6583!3d18.4925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8edb3ff2cd6f8745%3A0x8673a3df54f15bb1!2s24%20Tharpe%20St%2C%20Falmouth%2C%20Jamaica!5e0!3m2!1sen!2s!4v1680000000000!5m2!1sen!2s" 
+                            class="w-full h-full border-0 pointer-events-none opacity-80 group-hover:opacity-100 transition" 
+                            allowfullscreen="" 
+                            loading="lazy">
+                        </iframe>
+                        <div class="absolute inset-0 bg-brandBlue/30 group-hover:bg-brandBlue/10 transition flex items-center justify-center">
+                            <span class="bg-brandRed text-white text-xs font-bold px-3 py-1.5 rounded-full shadow flex items-center gap-2">
+                                <i class="fas fa-directions"></i> Click to Open Google Maps
+                            </span>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- Bottom Copyright & Credit -->
+            <div class="pt-8 border-t border-blue-800 text-center text-xs text-blue-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <p>&copy; 2026 Limitless Designz & Printing Ltd. All Rights Reserved.</p>
+                <p>Designed with Blue, Red & Yellow Brand Identity.</p>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Default Catalog Data
+        let products = [
+            { id: 1, name: 'Custom Logo Stitching', price: 'Get Quote', image: 'https://via.placeholder.com/400x300/0022d4/FFFFFF?text=Logo+Stitch' },
+            { id: 2, name: 'Large Format Prints', price: 'From $3,500 JMD', image: 'https://via.placeholder.com/400x300/e61c24/FFFFFF?text=Prints' },
+            { id: 3, name: 'Custom T-Shirts', price: 'From $2,500 JMD', image: 'https://via.placeholder.com/400x300/ffd600/000000?text=T-Shirts' },
+            { id: 4, name: 'Signage & Banners', price: 'From $8,000 JMD', image: 'https://via.placeholder.com/400x300/0022d4/FFFFFF?text=Signs' }
+        ];
+
+        // Toggle Mobile Navigation Menu
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Render Catalog Cards
+        function renderProducts() {
+            const container = document.getElementById('productGrid');
+            container.innerHTML = products.map(p => `
+                <div class="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-xl transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="h-48 bg-gray-100 overflow-hidden relative">
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">
+                            <span class="absolute top-2 right-2 bg-brandYellow text-gray-900 text-xs font-black px-2.5 py-1 rounded-full shadow">
+                                ${p.price}
+                            </span>
+                        </div>
+                        <div class="p-4 space-y-1">
+                            <h3 class="font-bold text-gray-900 text-lg">${p.name}</h3>
+                            <p class="text-xs text-gray-500">Premium quality design & print setup.</p>
+                        </div>
+                    </div>
+                    <div class="p-4 pt-0">
+                        <button onclick="openOrderModal('${p.name}')" class="w-full bg-brandBlue hover:bg-blue-800 text-white font-bold py-2.5 rounded-xl transition text-sm flex items-center justify-center gap-2">
+                            <i class="fas fa-cart-plus"></i> Order Now
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Admin Product List
+        function renderAdminList() {
+            const container = document.getElementById('adminProductList');
+            container.innerHTML = products.map(p => `
+                <div class="flex items-center justify-between p-2 bg-white rounded-lg border border-gray-200 text-xs">
+                    <div class="flex items-center gap-3">
+                        <img src="${p.image}" class="w-10 h-10 object-cover rounded">
+                        <div>
+                            <span class="font-bold text-gray-800 block">${p.name}</span>
+                            <span class="text-gray-500">${p.price}</span>
+                        </div>
+                    </div>
+                    <button onclick="deleteProduct(${p.id})" class="text-brandRed hover:text-red-700 p-2 font-bold">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Order Modal Functions
+        function openOrderModal(productName) {
+            document.getElementById('modalProductTitle').innerText = 'Order: ' + productName;
+            document.getElementById('selectedProductName').value = productName;
+            document.getElementById('orderModal').classList.remove('hidden');
+            document.getElementById('orderModal').classList.add('flex');
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').classList.add('hidden');
+            document.getElementById('orderModal').classList.remove('flex');
+        }
+
+        // Handle Order WhatsApp Routing
+        function handleOrderSubmit(e) {
+            e.preventDefault();
+            const prod = document.getElementById('selectedProductName').value;
+            const name = document.getElementById('customerName').value;
+            const phone = document.getElementById('customerPhone').value;
+            const shipping = document.getElementById('shippingMethod').value;
+            const receiptInput = document.getElementById('receiptFile');
+
+            let receiptText = receiptInput.files[0] ? `Receipt Attached: ${receiptInput.files[0].name}` : 'Receipt pending';
+
+            const message = `Hello Limitless Designz! New Order Request:%0A%0A` +
+                            `*Product:* ${prod}%0A` +
+                            `*Customer:* ${name}%0A` +
+                            `*Phone:* ${phone}%0A` +
+                            `*Delivery Option:* ${shipping}%0A` +
+                            `*Payment Proof:* ${receiptText}`;
+
+            window.open(`https://wa.me/18763702108?text=${message}`, '_blank');
+            closeOrderModal();
+        }
+
+        // Admin Access Logic
+        function openAdminModal() {
+            document.getElementById('adminModal').classList.remove('hidden');
+            document.getElementById('adminModal').classList.add('flex');
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.add('hidden');
+            document.getElementById('adminModal').classList.remove('flex');
+        }
+
+        function authenticateAdmin() {
+            const pin = document.getElementById('adminPinInput').value;
+            if(pin === '1234') { // Secure PIN check
+                document.getElementById('adminAuthGate').classList.add('hidden');
+                document.getElementById('adminControls').classList.remove('hidden');
+                renderAdminList();
+            } else {
+                document.getElementById('authError').classList.remove('hidden');
+            }
+        }
+
+        // Update Hero Feature Image from Local Upload
+        function handleUpdateHeroFeature(e) {
+            e.preventDefault();
+            const fileInput = document.getElementById('newHeroFeatureFile');
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('featureHeroImg').src = e.target.result;
+                    fileInput.value = '';
+                    alert('Hero feature image successfully updated!');
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+
+        // Add Product with Local Image Upload
+        function handleAddProduct(e) {
+            e.preventDefault();
+            const name = document.getElementById('newProdName').value;
+            const price = document.getElementById('newProdPrice').value;
+            const fileInput = document.getElementById('newProdFile');
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const newProd = { 
+                        id: Date.now(), 
+                        name: name, 
+                        price: price, 
+                        image: e.target.result 
+                    };
+                    products.push(newProd);
+
+                    renderProducts();
+                    renderAdminList();
+
+                    document.getElementById('newProdName').value = '';
+                    document.getElementById('newProdPrice').value = '';
+                    fileInput.value = '';
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+
+        function deleteProduct(id) {
+            products = products.filter(p => p.id !== id);
+            renderProducts();
+            renderAdminList();
+        }
+
+        // Initialize Page
+        renderProducts();
+        async function handleOrderSubmit(e) {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('productName', document.getElementById('selectedProductName').value);
+    formData.append('customerName', document.getElementById('customerName').value);
+    formData.append('customerPhone', document.getElementById('customerPhone').value);
+    formData.append('shippingMethod', document.getElementById('shippingMethod').value);
+    formData.append('receiptFile', document.getElementById('receiptFile').files[0]);
+
+    try {
+        const response = await fetch('https://YOUR-RENDER-APP-NAME.onrender.com/api/orders', {
+            method: 'POST',
+            body: formData
+        });
+        const data = await response.json();
+        if(data.success) {
+            alert('Order submitted! Receipt sent to limitless4659@gmail.com');
+            closeOrderModal();
+        }
+    } catch (err) {
+        alert('Order submission failed. Please try again or WhatsApp us directly.');
+    }
+}
+    </script>
+</body>
+</html>
