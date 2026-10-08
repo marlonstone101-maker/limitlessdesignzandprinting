@@ -28,22 +28,28 @@
             height: 5px;
         }
     </style>
-    <!-- Firebase App & Auth SDKs -->
+    <!-- Firebase App, Auth & Analytics SDKs -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
 
         // Your Firebase Project Credentials
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyBcHcJdksT--Ggs4koLIypFpyyuBN9Jy0o",
+            authDomain: "limitless-designz.firebaseapp.com",
+            projectId: "limitless-designz",
+            storageBucket: "limitless-designz.firebasestorage.app",
+            messagingSenderId: "166874823401",
+            appId: "1:166874823401:web:25ba59d028ca4990b20e78",
+            measurementId: "G-CH1R9E4SPG"
         };
 
+        // Initialize Firebase Services
         const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+
+        // Expose Auth functions to window for UI script access
         window.firebaseAuth = getAuth(app);
         window.signInWithEmailAndPassword = signInWithEmailAndPassword;
     </script>
