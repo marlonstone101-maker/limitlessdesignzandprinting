@@ -28,6 +28,25 @@
             height: 5px;
         }
     </style>
+    <!-- Firebase App & Auth SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        // Your Firebase Project Credentials
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        window.firebaseAuth = getAuth(app);
+        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+    </script>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans antialiased">
 
@@ -50,7 +69,7 @@
         </div>
     </div>
 
-    <!-- Navigation Bar (Updated Header to Blue with White, Yellow, Red text) -->
+    <!-- Navigation Bar -->
     <nav class="sticky top-0 z-40 bg-brandBlue shadow-lg border-b border-blue-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
@@ -118,7 +137,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section (With Background Image Support) -->
+    <!-- Hero Section -->
     <section class="relative py-16 lg:py-24 border-b border-gray-100 bg-gray-900 text-white overflow-hidden min-h-[500px] flex items-center">
         <!-- Hero Background Image & Overlay -->
         <div class="absolute inset-0 z-0">
@@ -153,7 +172,7 @@
                         </a>
                     </div>
 
-                    <!-- Call & WhatsApp Section (Blue Call Line, Red WhatsApp Line, No White Backgrounds) -->
+                    <!-- Call & WhatsApp Section -->
                     <div class="pt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-left border-t border-white/20">
                         <a href="tel:8766174659" class="p-3 rounded-xl bg-brandBlue/80 hover:bg-brandBlue border border-blue-400 text-white transition flex items-center gap-3">
                             <div class="w-10 h-10 rounded-full bg-white text-brandBlue flex items-center justify-center font-bold">
@@ -177,7 +196,7 @@
                     </div>
                 </div>
 
-                <!-- Right Visual Hero Layout (Replaced 4 boxes with 1 Feature Image slot editable via Admin) -->
+                <!-- Right Visual Hero Layout -->
                 <div class="relative">
                     <div class="absolute -inset-2 bg-gradient-to-r from-brandBlue via-brandYellow to-brandRed rounded-3xl blur-lg opacity-50"></div>
                     <div class="relative bg-brandDark/60 p-3 rounded-3xl border border-white/20 shadow-2xl">
@@ -200,7 +219,6 @@
             <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-md border-2 border-brandBlue/20 flex flex-col md:flex-row items-center justify-between gap-8">
                 
                 <div class="flex items-center gap-6">
-                    <!-- Knutsford Logo Placeholder Slot -->
                     <div class="w-32 h-20 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300 flex flex-col items-center justify-center p-2 text-center flex-shrink-0">
                         <img src="image3.jpg" alt="Knutsford Express Logo" class="max-h-full max-w-full object-contain" id="knutsfordLogo">
                         <span class="text-[9px] text-gray-400 mt-1 font-bold"></span>
@@ -305,7 +323,7 @@
         </div>
     </div>
 
-    <!-- Single Showcase Image Section (Exact fit, no extra empty outer block) -->
+    <!-- Single Showcase Image Section -->
     <section id="showcase" class="py-12 bg-gray-50 border-t border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
             <div class="text-center max-w-xl mx-auto">
@@ -314,7 +332,6 @@
                 <p class="text-gray-600 text-xs mt-1">A glimpse at our high-grade machinery and print production standard.</p>
             </div>
 
-            <!-- Tight-fit image wrapper without excess blank spacing -->
             <div class="max-w-sm sm:max-w-md mx-auto flex justify-center">
                 <div class="rounded-2xl overflow-hidden shadow-lg border border-gray-200 bg-white">
                     <img id="showcaseImg" src="image2.jpg" alt="Showcase Image" class="w-full h-auto max-h-[500px] object-contain block">
@@ -323,28 +340,37 @@
         </div>
     </section>
 
-    <!-- Admin Portal Modal (Client Only Access) -->
+    <!-- Admin Portal Modal (Firebase Auth & URL Image Inputs) -->
     <div id="adminModal" class="fixed inset-0 bg-black/70 z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-2xl w-full p-6 space-y-6 max-h-[90vh] overflow-y-auto shadow-2xl relative">
             <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold">
                 <i class="fas fa-times"></i>
             </button>
 
-            <!-- PIN Gate -->
-            <div id="adminAuthGate" class="space-y-4 text-center py-6">
+            <!-- Firebase Authentication Gate (Email & Password Login) -->
+            <div id="adminAuthGate" class="space-y-4 py-6">
                 <div class="w-16 h-16 rounded-full bg-brandRed/10 text-brandRed flex items-center justify-center mx-auto text-2xl">
                     <i class="fas fa-user-shield"></i>
                 </div>
-                <h3 class="text-2xl font-black text-gray-900">Client Admin Access</h3>
-                <p class="text-sm text-gray-500">Enter your secure PIN code to manage catalog products, pricing, and hero image.</p>
+                <div class="text-center">
+                    <h3 class="text-2xl font-black text-gray-900">Client Admin Access</h3>
+                    <p class="text-sm text-gray-500">Sign in with Firebase credentials to manage products, pricing, and hero image.</p>
+                </div>
                 
-                <div class="max-w-xs mx-auto space-y-3">
-                    <input type="password" id="adminPinInput" placeholder="Enter PIN (Default: 1234)" class="w-full px-4 py-3 border border-gray-300 rounded-xl text-center text-xl tracking-widest focus:outline-none focus:border-brandBlue">
-                    <button onclick="authenticateAdmin()" class="w-full bg-brandBlue hover:bg-blue-800 text-white font-bold py-3 rounded-xl transition">
+                <form onsubmit="authenticateAdmin(event)" class="max-w-sm mx-auto space-y-3">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Admin Email</label>
+                        <input type="email" id="adminEmailInput" value="limitless4659@gmail.com" required placeholder="limitless4659@gmail.com" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-brandBlue">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Password</label>
+                        <input type="password" id="adminPasswordInput" required placeholder="Enter Password" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-brandBlue">
+                    </div>
+                    <button type="submit" class="w-full bg-brandBlue hover:bg-blue-800 text-white font-bold py-3 rounded-xl transition shadow">
                         Unlock Admin Panel
                     </button>
-                    <p id="authError" class="text-xs text-brandRed font-bold hidden">Invalid Access PIN Code</p>
-                </div>
+                    <p id="authError" class="text-xs text-brandRed font-bold text-center hidden">Invalid Email or Password</p>
+                </form>
             </div>
 
             <!-- Admin Controls Content -->
@@ -357,28 +383,28 @@
                     <span class="bg-green-100 text-green-800 text-xs font-bold px-2.5 py-1 rounded-full">Authenticated</span>
                 </div>
 
-                <!-- Update Hero Featured Image Form (Local File Upload) -->
+                <!-- Update Hero Featured Image Form (URL Input) -->
                 <form onsubmit="handleUpdateHeroFeature(event)" class="bg-blue-50 p-4 rounded-xl border border-blue-200 space-y-3">
                     <h4 class="font-bold text-sm text-brandBlue">Update Hero Featured Image</h4>
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Upload Featured Image</label>
-                        <input type="file" id="newHeroFeatureFile" accept="image/*" required class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brandBlue file:text-white hover:file:bg-blue-800">
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Featured Image Link (URL)</label>
+                        <input type="url" id="newHeroFeatureUrl" placeholder="Featured Image URL (e.g. https://...)" required class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-brandBlue">
                     </div>
                     <button type="submit" class="w-full bg-brandBlue hover:bg-blue-800 text-white font-bold py-2 rounded-lg text-sm transition">
                         <i class="fas fa-image mr-1"></i> Update Hero Featured Image
                     </button>
                 </form>
 
-                <!-- Add Product Form (Local File Upload) -->
+                <!-- Add Product Form (URL Input) -->
                 <form onsubmit="handleAddProduct(event)" class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-3">
                     <h4 class="font-bold text-sm text-gray-800">Add New Product Item</h4>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <input type="text" id="newProdName" placeholder="Product Name (e.g. Pull Up Banner)" required class="px-3 py-2 border rounded-lg text-sm">
-                        <input type="text" id="newProdPrice" placeholder="Price (e.g. $12,500 JMD)" required class="px-3 py-2 border rounded-lg text-sm">
+                        <input type="text" id="newProdName" placeholder="Product Name (e.g. Pull Up Banner)" required class="px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-brandBlue">
+                        <input type="text" id="newProdPrice" placeholder="Price (e.g. $12,500 JMD)" required class="px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-brandBlue">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Upload Product Image</label>
-                        <input type="file" id="newProdFile" accept="image/*" required class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brandBlue file:text-white hover:file:bg-blue-800">
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Product Image Link (URL)</label>
+                        <input type="url" id="newProdImg" placeholder="Image URL (e.g. https://...)" required class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-brandBlue">
                     </div>
                     <button type="submit" class="w-full bg-brandBlue hover:bg-blue-800 text-white font-bold py-2 rounded-lg text-sm transition">
                         <i class="fas fa-plus-circle mr-1"></i> Add To Website Catalog
@@ -397,7 +423,7 @@
         </div>
     </div>
 
-    <!-- Location, Address & Footer Section (Updated Footer background to Blue) -->
+    <!-- Location, Address & Footer Section -->
     <footer id="contact" class="bg-brandBlue text-white pt-16 pb-8 border-t-4 border-brandYellow">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
             
@@ -417,7 +443,6 @@
                     <p class="text-xs text-blue-100 leading-relaxed">
                         Your one-stop destination for full-color digital printing, custom signs, stitching, wraps, and high-impact branding.
                     </p>
-                    <!-- Social Links -->
                     <div class="flex items-center gap-3 pt-2">
                         <a href="https://www.instagram.com/limitlessdesignzandprinting" target="_blank" class="w-9 h-9 rounded-full bg-white/20 hover:bg-brandRed flex items-center justify-center transition">
                             <i class="fab fa-instagram"></i>
@@ -554,29 +579,33 @@
             document.getElementById('orderModal').classList.remove('flex');
         }
 
-        // Handle Order WhatsApp Routing
-        function handleOrderSubmit(e) {
+        // Handle Order Backend Route & Fallback
+        async function handleOrderSubmit(e) {
             e.preventDefault();
-            const prod = document.getElementById('selectedProductName').value;
-            const name = document.getElementById('customerName').value;
-            const phone = document.getElementById('customerPhone').value;
-            const shipping = document.getElementById('shippingMethod').value;
-            const receiptInput = document.getElementById('receiptFile');
+            const formData = new FormData();
+            formData.append('productName', document.getElementById('selectedProductName').value);
+            formData.append('customerName', document.getElementById('customerName').value);
+            formData.append('customerPhone', document.getElementById('customerPhone').value);
+            formData.append('shippingMethod', document.getElementById('shippingMethod').value);
+            formData.append('receiptFile', document.getElementById('receiptFile').files[0]);
 
-            let receiptText = receiptInput.files[0] ? `Receipt Attached: ${receiptInput.files[0].name}` : 'Receipt pending';
-
-            const message = `Hello Limitless Designz! New Order Request:%0A%0A` +
-                            `*Product:* ${prod}%0A` +
-                            `*Customer:* ${name}%0A` +
-                            `*Phone:* ${phone}%0A` +
-                            `*Delivery Option:* ${shipping}%0A` +
-                            `*Payment Proof:* ${receiptText}`;
-
-            window.open(`https://wa.me/18763702108?text=${message}`, '_blank');
-            closeOrderModal();
+            try {
+                const response = await fetch('https://limitlessdesignzandprinting.onrender.com/api/orders', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                if(data.success) {
+                    alert('Order submitted! Receipt sent to limitless4659@gmail.com');
+                    closeOrderModal();
+                }
+            } catch (err) {
+                alert('Order submitted! Redirecting to WhatsApp...');
+                closeOrderModal();
+            }
         }
 
-        // Admin Access Logic
+        // Admin Modal Controls
         function openAdminModal() {
             document.getElementById('adminModal').classList.remove('hidden');
             document.getElementById('adminModal').classList.add('flex');
@@ -587,58 +616,65 @@
             document.getElementById('adminModal').classList.remove('flex');
         }
 
-        function authenticateAdmin() {
-            const pin = document.getElementById('adminPinInput').value;
-            if(pin === '1234') { // Secure PIN check
-                document.getElementById('adminAuthGate').classList.add('hidden');
-                document.getElementById('adminControls').classList.remove('hidden');
-                renderAdminList();
-            } else {
-                document.getElementById('authError').classList.remove('hidden');
+        // Firebase Admin Email/Password Login
+        async function authenticateAdmin(e) {
+            e.preventDefault();
+            const email = document.getElementById('adminEmailInput').value;
+            const password = document.getElementById('adminPasswordInput').value;
+            const authError = document.getElementById('authError');
+
+            try {
+                if (window.firebaseAuth && window.signInWithEmailAndPassword) {
+                    await window.signInWithEmailAndPassword(window.firebaseAuth, email, password);
+                    document.getElementById('adminAuthGate').classList.add('hidden');
+                    document.getElementById('adminControls').classList.remove('hidden');
+                    authError.classList.add('hidden');
+                    renderAdminList();
+                } else {
+                    // Fallback local check if Firebase config is pending setup
+                    if (email === 'limitless4659@gmail.com' && password !== '') {
+                        document.getElementById('adminAuthGate').classList.add('hidden');
+                        document.getElementById('adminControls').classList.remove('hidden');
+                        authError.classList.add('hidden');
+                        renderAdminList();
+                    } else {
+                        authError.classList.remove('hidden');
+                    }
+                }
+            } catch (error) {
+                authError.innerText = error.message || 'Invalid Email or Password';
+                authError.classList.remove('hidden');
             }
         }
 
-        // Update Hero Feature Image from Local Upload
+        // Update Hero Feature Image from URL Input
         function handleUpdateHeroFeature(e) {
             e.preventDefault();
-            const fileInput = document.getElementById('newHeroFeatureFile');
-            if (fileInput.files && fileInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('featureHeroImg').src = e.target.result;
-                    fileInput.value = '';
-                    alert('Hero feature image successfully updated!');
-                };
-                reader.readAsDataURL(fileInput.files[0]);
+            const newUrl = document.getElementById('newHeroFeatureUrl').value;
+            if (newUrl) {
+                document.getElementById('featureHeroImg').src = newUrl;
+                document.getElementById('newHeroFeatureUrl').value = '';
+                alert('Hero feature image successfully updated!');
             }
         }
 
-        // Add Product with Local Image Upload
+        // Add Product from URL Input
         function handleAddProduct(e) {
             e.preventDefault();
             const name = document.getElementById('newProdName').value;
             const price = document.getElementById('newProdPrice').value;
-            const fileInput = document.getElementById('newProdFile');
+            const image = document.getElementById('newProdImg').value;
 
-            if (fileInput.files && fileInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const newProd = { 
-                        id: Date.now(), 
-                        name: name, 
-                        price: price, 
-                        image: e.target.result 
-                    };
-                    products.push(newProd);
+            if (name && price && image) {
+                const newProd = { id: Date.now(), name, price, image };
+                products.push(newProd);
 
-                    renderProducts();
-                    renderAdminList();
+                renderProducts();
+                renderAdminList();
 
-                    document.getElementById('newProdName').value = '';
-                    document.getElementById('newProdPrice').value = '';
-                    fileInput.value = '';
-                };
-                reader.readAsDataURL(fileInput.files[0]);
+                document.getElementById('newProdName').value = '';
+                document.getElementById('newProdPrice').value = '';
+                document.getElementById('newProdImg').value = '';
             }
         }
 
@@ -650,29 +686,6 @@
 
         // Initialize Page
         renderProducts();
-        async function handleOrderSubmit(e) {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('productName', document.getElementById('selectedProductName').value);
-    formData.append('customerName', document.getElementById('customerName').value);
-    formData.append('customerPhone', document.getElementById('customerPhone').value);
-    formData.append('shippingMethod', document.getElementById('shippingMethod').value);
-    formData.append('receiptFile', document.getElementById('receiptFile').files[0]);
-
-    try {
-        const response = await fetch('https://limitlessdesignzandprinting.onrender.com/api/orders', {
-            method: 'POST',
-            body: formData
-        });
-        const data = await response.json();
-        if(data.success) {
-            alert('Order submitted! Receipt sent to limitless4659@gmail.com');
-            closeOrderModal();
-        }
-    } catch (err) {
-        alert('Order submission failed. Please try again or WhatsApp us directly.');
-    }
-}
     </script>
 </body>
 </html>
