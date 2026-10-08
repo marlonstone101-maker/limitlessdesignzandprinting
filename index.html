@@ -27,6 +27,11 @@
             background: linear-gradient(90deg, #ffd600 0%, #e61c24 50%, #0022d4 100%);
             height: 5px;
         }
+        /* Fade edges seamlessly into white background */
+        .image-fade-white {
+            -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 98%);
+            mask-image: radial-gradient(circle, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 98%);
+        }
     </style>
     <!-- Firebase App, Auth & Analytics SDKs -->
     <script type="module">
@@ -143,61 +148,70 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="relative py-12 sm:py-20 lg:py-28 border-b border-gray-100 bg-gray-900 text-white overflow-hidden min-h-[550px] flex items-center">
-        <!-- Hero Background Image & Gradient Overlay (Positioned far right on mobile) -->
-        <div class="absolute inset-0 z-0">
-            <img id="heroBgImg" src="image1.jpg" alt="Hero Background" class="w-full h-full object-cover object-[100%_0%] sm:object-[85%_20%] opacity-70">
-            <div class="absolute inset-0 bg-gradient-to-r from-brandDark/95 via-brandDark/80 sm:via-brandDark/60 to-transparent"></div>
-        </div>
+    <!-- Hero Section (White Faded Blurry Background + Soft Image Fade Edge) -->
+    <section class="py-8 sm:py-16 lg:py-20 border-b border-gray-100 bg-white relative text-gray-900 overflow-hidden">
+        
+        <!-- Blurry Faded White Backing Glow Effect -->
+        <div class="absolute inset-0 bg-gradient-to-tr from-white via-blue-50/50 to-white backdrop-blur-xl pointer-events-none"></div>
 
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <!-- Constrained content column on mobile to keep left space open for the background subject -->
-            <div class="max-w-[78%] sm:max-w-md lg:max-w-lg text-left space-y-4 sm:space-y-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                 
-                <div class="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-brandYellow/20 border border-brandYellow text-brandYellow font-bold text-[11px] sm:text-sm uppercase tracking-wide backdrop-blur-sm">
-                    <i class="fas fa-star text-brandYellow"></i> Your One Stop Shop For Printing
+                <!-- Left Side: Hero Text & Buttons -->
+                <div class="space-y-4 sm:space-y-6 order-2 lg:order-1 text-left">
+                    
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brandBlue/10 border border-brandBlue/20 text-brandBlue font-bold text-xs sm:text-sm uppercase tracking-wide">
+                        <i class="fas fa-star text-brandYellow"></i> Your One Stop Shop For Printing
+                    </div>
+                    
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-gray-900 leading-tight">
+                        Bring Your Visuals To Life With <span class="text-brandBlue">Limitless</span> Precision
+                    </h1>
+                    
+                    <p class="text-xs sm:text-base text-gray-600 leading-relaxed">
+                        From custom T-shirts, X-Banners, Logo Stitching, vehicle wraps, and large format banners — we deliver high-impact print quality shipped right across Jamaica.
+                    </p>
+
+                    <!-- Order & Explore Buttons -->
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-3 pt-2">
+                        <a href="#products" class="bg-brandRed hover:bg-red-700 text-white font-black text-sm sm:text-base px-6 py-3 rounded-xl shadow-lg transition text-center flex items-center justify-center gap-2">
+                            <i class="fas fa-shopping-cart"></i> ORDER NOW
+                        </a>
+                        <a href="#products" class="bg-brandBlue hover:bg-blue-800 text-white font-black text-sm sm:text-base px-6 py-3 rounded-xl shadow-lg transition text-center flex items-center justify-center gap-2">
+                            <i class="fas fa-th-large"></i> EXPLORE PRODUCTS
+                        </a>
+                    </div>
+
+                    <!-- Call & WhatsApp Action Cards -->
+                    <div class="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 border-t border-gray-200">
+                        <a href="tel:8766174659" class="p-3 rounded-xl bg-brandBlue text-white transition flex items-center gap-3 shadow-md hover:bg-blue-800">
+                            <div class="w-9 h-9 rounded-full bg-white text-brandBlue flex items-center justify-center font-bold text-xs flex-shrink-0">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[10px] text-brandYellow uppercase font-bold block leading-none">Main Office Line</span>
+                                <span class="font-bold text-white text-xs sm:text-sm">(876) 617-4659</span>
+                            </div>
+                        </a>
+
+                        <a href="https://wa.me/18763702108" target="_blank" class="p-3 rounded-xl bg-brandRed text-white transition flex items-center gap-3 shadow-md hover:bg-red-700">
+                            <div class="w-9 h-9 rounded-full bg-white text-brandRed flex items-center justify-center font-bold text-xs flex-shrink-0">
+                                <i class="fab fa-whatsapp text-sm"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[10px] text-brandYellow uppercase font-bold block leading-none">WhatsApp Line</span>
+                                <span class="font-bold text-white text-xs sm:text-sm">(876) 370-2108</span>
+                            </div>
+                        </a>
+                    </div>
+
                 </div>
-                
-                <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black text-white leading-tight drop-shadow-lg">
-                    Bring Your Visuals To Life With <span class="text-brandYellow">Limitless</span> Precision
-                </h1>
-                
-                <p class="text-xs sm:text-base text-gray-100 drop-shadow leading-relaxed">
-                    From custom T-shirts, X-Banners, Logo Stitching, vehicle wraps, and large format banners — we deliver high-impact print quality shipped right across Jamaica.
-                </p>
 
-                <!-- Compact Order & Explore Buttons (Shifted Left) -->
-                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-start gap-2.5 pt-1">
-                    <a href="#products" class="w-[82%] sm:w-auto bg-brandRed hover:bg-red-700 text-white font-black text-xs sm:text-base px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl shadow-lg transition text-center flex items-center justify-center gap-1.5">
-                        <i class="fas fa-shopping-cart"></i> ORDER NOW
-                    </a>
-                    <a href="#products" class="w-[82%] sm:w-auto bg-brandBlue hover:bg-blue-800 text-white font-black text-xs sm:text-base px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl shadow-lg transition text-center flex items-center justify-center gap-1.5">
-                        <i class="fas fa-th-large"></i> EXPLORE PRODUCTS
-                    </a>
-                </div>
-
-                <!-- Call & WhatsApp Action Cards (Compact & Shifted Left) -->
-                <div class="pt-3 space-y-2 border-t border-white/20 max-w-[85%] sm:max-w-xs">
-                    <a href="tel:8766174659" class="p-2.5 rounded-xl bg-brandBlue/90 hover:bg-brandBlue border border-blue-400/50 text-white transition flex items-center gap-2.5 shadow-md">
-                        <div class="w-8 h-8 rounded-full bg-white text-brandBlue flex items-center justify-center font-bold text-xs flex-shrink-0">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div class="text-left">
-                            <span class="text-[10px] text-brandYellow uppercase font-bold block leading-none">Main Office Line</span>
-                            <span class="font-bold text-white text-xs sm:text-sm">(876) 617-4659</span>
-                        </div>
-                    </a>
-
-                    <a href="https://wa.me/18763702108" target="_blank" class="p-2.5 rounded-xl bg-brandRed/90 hover:bg-brandRed border border-red-400/50 text-white transition flex items-center gap-2.5 shadow-md">
-                        <div class="w-8 h-8 rounded-full bg-white text-brandRed flex items-center justify-center font-bold text-xs flex-shrink-0">
-                            <i class="fab fa-whatsapp text-sm"></i>
-                        </div>
-                        <div class="text-left">
-                            <span class="text-[10px] text-brandYellow uppercase font-bold block leading-none">WhatsApp Line</span>
-                            <span class="font-bold text-white text-xs sm:text-sm">(876) 370-2108</span>
-                        </div>
-                    </a>
+                <!-- Right Side: Hero Image Fading into White Background -->
+                <div class="order-1 lg:order-2 flex justify-center lg:justify-end">
+                    <div class="relative w-full max-w-md lg:max-w-lg">
+                        <img id="heroBgImg" src="image1.jpg" alt="Hero Featured Image" class="w-full h-72 sm:h-96 lg:h-[480px] object-cover object-top block image-fade-white">
+                    </div>
                 </div>
 
             </div>
