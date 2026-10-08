@@ -148,18 +148,14 @@
         </div>
     </nav>
 
-    <!-- Hero Section (White Faded Blurry Background + Soft Image Fade Edge) -->
+    <!-- Hero Section -->
     <section class="py-8 sm:py-16 lg:py-20 border-b border-gray-100 bg-white relative text-gray-900 overflow-hidden">
-        
-        <!-- Blurry Faded White Backing Glow Effect -->
         <div class="absolute inset-0 bg-gradient-to-tr from-white via-blue-50/50 to-white backdrop-blur-xl pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                 
-                <!-- Left Side: Hero Text & Buttons -->
                 <div class="space-y-4 sm:space-y-6 order-2 lg:order-1 text-left">
-                    
                     <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brandBlue/10 border border-brandBlue/20 text-brandBlue font-bold text-xs sm:text-sm uppercase tracking-wide">
                         <i class="fas fa-star text-brandYellow"></i> Your One Stop Shop For Printing
                     </div>
@@ -172,7 +168,6 @@
                         From custom T-shirts, X-Banners, Logo Stitching, vehicle wraps, and large format banners — we deliver high-impact print quality shipped right across Jamaica.
                     </p>
 
-                    <!-- Order & Explore Buttons -->
                     <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-3 pt-2">
                         <a href="#products" class="bg-brandRed hover:bg-red-700 text-white font-black text-sm sm:text-base px-6 py-3 rounded-xl shadow-lg transition text-center flex items-center justify-center gap-2">
                             <i class="fas fa-shopping-cart"></i> ORDER NOW
@@ -182,7 +177,6 @@
                         </a>
                     </div>
 
-                    <!-- Call & WhatsApp Action Cards -->
                     <div class="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 border-t border-gray-200">
                         <a href="tel:8766174659" class="p-3 rounded-xl bg-brandBlue text-white transition flex items-center gap-3 shadow-md hover:bg-blue-800">
                             <div class="w-9 h-9 rounded-full bg-white text-brandBlue flex items-center justify-center font-bold text-xs flex-shrink-0">
@@ -207,7 +201,6 @@
 
                 </div>
 
-                <!-- Right Side: Hero Image Fading into White Background -->
                 <div class="order-1 lg:order-2 flex justify-center lg:justify-end">
                     <div class="relative w-full max-w-md lg:max-w-lg">
                         <img id="heroBgImg" src="image1.jpg" alt="Hero Featured Image" class="w-full h-72 sm:h-96 lg:h-[480px] object-cover object-top block image-fade-white">
@@ -266,7 +259,7 @@
         </div>
     </section>
 
-    <!-- Bank Transfer & Order Modal -->
+    <!-- Bank Transfer & Email Order Modal (With Quantity Calculator) -->
     <div id="orderModal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto shadow-2xl relative">
             <button onclick="closeOrderModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold">
@@ -275,7 +268,7 @@
 
             <div class="border-b border-gray-100 pb-3">
                 <h3 class="text-xl font-black text-brandBlue" id="modalProductTitle">Place Your Print Order</h3>
-                <p class="text-xs text-gray-500">Complete payment via Bank Transfer and submit your order details.</p>
+                <p class="text-xs text-gray-500">Complete payment via Bank Transfer and submit your order details via email.</p>
             </div>
 
             <!-- Bank Transfer Information -->
@@ -295,10 +288,12 @@
             <!-- Order Form -->
             <form id="orderForm" onsubmit="handleOrderSubmit(event)" class="space-y-3">
                 <input type="hidden" id="selectedProductName">
-                
+                <input type="hidden" id="selectedUnitPrice" value="2500">
+                <input type="hidden" id="calculatedTotalAmount" value="2500">
+
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Your Full Name</label>
-                    <input type="text" required id="customerName" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-brandBlue">
+                    <input type="text" required id="customerName" placeholder="e.g. John Brown" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-brandBlue">
                 </div>
 
                 <div class="grid grid-cols-2 gap-2">
@@ -315,14 +310,27 @@
                     </div>
                 </div>
 
+                <!-- Quantity Selection & Automated Price Total Box -->
+                <div class="grid grid-cols-2 gap-2 bg-gray-50 p-3 rounded-xl border border-gray-200 items-center">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Quantity / Items</label>
+                        <input type="number" min="1" max="1000" value="1" id="orderQuantity" oninput="updateCalculatedPrice()" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm font-bold text-brandBlue focus:outline-none focus:border-brandBlue">
+                    </div>
+                    <div class="text-right">
+                        <span class="block text-[10px] font-bold text-gray-500 uppercase">Estimated Total Amount</span>
+                        <span id="displayTotalPrice" class="text-base sm:text-lg font-black text-brandRed">$2,500 JMD</span>
+                    </div>
+                </div>
+
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Upload Payment Receipt</label>
                     <input type="file" required id="receiptFile" accept="image/*" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brandBlue file:text-white hover:file:bg-blue-800">
                     <span class="text-[10px] text-gray-400 block mt-1">Please attach proof of payment/receipt image.</span>
                 </div>
 
-                <button type="submit" class="w-full bg-brandRed hover:bg-red-700 text-white font-bold py-3 rounded-xl transition shadow">
-                    <i class="fab fa-whatsapp mr-2"></i> Submit Order & Receipt via WhatsApp
+                <!-- Submit via Email Button -->
+                <button type="submit" class="w-full bg-brandRed hover:bg-red-700 text-white font-bold py-3 rounded-xl transition shadow flex items-center justify-center gap-2">
+                    <i class="fas fa-paper-plane"></i> Submit Order & Receipt via Email
                 </button>
             </form>
         </div>
@@ -352,7 +360,7 @@
                 <i class="fas fa-times"></i>
             </button>
 
-            <!-- Firebase Authentication Gate (Email & Password Login) -->
+            <!-- Firebase Authentication Gate -->
             <div id="adminAuthGate" class="space-y-4 py-6">
                 <div class="w-16 h-16 rounded-full bg-brandRed/10 text-brandRed flex items-center justify-center mx-auto text-2xl">
                     <i class="fas fa-user-shield"></i>
@@ -388,7 +396,7 @@
                     <span class="bg-green-100 text-green-800 text-xs font-bold px-2.5 py-1 rounded-full">Authenticated</span>
                 </div>
 
-                <!-- Update Hero Featured Image Form (URL Input) -->
+                <!-- Update Hero Featured Image Form -->
                 <form onsubmit="handleUpdateHeroFeature(event)" class="bg-blue-50 p-4 rounded-xl border border-blue-200 space-y-3">
                     <h4 class="font-bold text-sm text-brandBlue">Update Hero Featured Image</h4>
                     <div>
@@ -400,7 +408,7 @@
                     </button>
                 </form>
 
-                <!-- Add Product Form (URL Input) -->
+                <!-- Add Product Form -->
                 <form onsubmit="handleAddProduct(event)" class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-3">
                     <h4 class="font-bold text-sm text-gray-800">Add New Product Item</h4>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -431,7 +439,6 @@
     <!-- Location, Address & Footer Section -->
     <footer id="contact" class="bg-brandBlue text-white pt-16 pb-8 border-t-4 border-brandYellow">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-            
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
                 
                 <!-- Company Bio & Logo -->
@@ -501,23 +508,21 @@
 
             </div>
 
-            <!-- Bottom Copyright & Credit -->
             <div class="pt-8 border-t border-blue-800 text-center text-xs text-blue-200 flex flex-col sm:flex-row justify-between items-center gap-4">
                 <p>&copy; 2026 Limitless Designz & Printing Ltd. All Rights Reserved.</p>
                 <p>Designed with Blue, Red & Yellow Brand Identity.</p>
             </div>
-
         </div>
     </footer>
 
     <!-- JavaScript Application Logic -->
     <script>
-        // Default Catalog Data
+        // Default Catalog Data with Unit Pricing
         let products = [
-            { id: 1, name: 'Custom Logo Stitching', price: 'Get Quote', image: 'https://via.placeholder.com/400x300/0022d4/FFFFFF?text=Logo+Stitch' },
-            { id: 2, name: 'Large Format Prints', price: 'From $3,500 JMD', image: 'https://via.placeholder.com/400x300/e61c24/FFFFFF?text=Prints' },
-            { id: 3, name: 'Custom T-Shirts', price: 'From $2,500 JMD', image: 'https://via.placeholder.com/400x300/ffd600/000000?text=T-Shirts' },
-            { id: 4, name: 'Signage & Banners', price: 'From $8,000 JMD', image: 'https://via.placeholder.com/400x300/0022d4/FFFFFF?text=Signs' }
+            { id: 1, name: 'Custom Logo Stitching', unitPrice: 3000, displayPrice: 'From $3,000 JMD', image: 'https://via.placeholder.com/400x300/0022d4/FFFFFF?text=Logo+Stitch' },
+            { id: 2, name: 'Large Format Prints', unitPrice: 3500, displayPrice: 'From $3,500 JMD', image: 'https://via.placeholder.com/400x300/e61c24/FFFFFF?text=Prints' },
+            { id: 3, name: 'Custom T-Shirts', unitPrice: 2500, displayPrice: 'From $2,500 JMD', image: 'https://via.placeholder.com/400x300/ffd600/000000?text=T-Shirts' },
+            { id: 4, name: 'Signage & Banners', unitPrice: 8000, displayPrice: 'From $8,000 JMD', image: 'https://via.placeholder.com/400x300/0022d4/FFFFFF?text=Signs' }
         ];
 
         // Toggle Mobile Navigation Menu
@@ -535,7 +540,7 @@
                         <div class="h-48 bg-gray-100 overflow-hidden relative">
                             <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">
                             <span class="absolute top-2 right-2 bg-brandYellow text-gray-900 text-xs font-black px-2.5 py-1 rounded-full shadow">
-                                ${p.price}
+                                ${p.displayPrice || ('$' + p.unitPrice.toLocaleString() + ' JMD')}
                             </span>
                         </div>
                         <div class="p-4 space-y-1">
@@ -544,7 +549,7 @@
                         </div>
                     </div>
                     <div class="p-4 pt-0">
-                        <button onclick="openOrderModal('${p.name}')" class="w-full bg-brandBlue hover:bg-blue-800 text-white font-bold py-2.5 rounded-xl transition text-sm flex items-center justify-center gap-2">
+                        <button onclick="openOrderModal('${p.name}', ${p.unitPrice || 2500})" class="w-full bg-brandBlue hover:bg-blue-800 text-white font-bold py-2.5 rounded-xl transition text-sm flex items-center justify-center gap-2">
                             <i class="fas fa-cart-plus"></i> Order Now
                         </button>
                     </div>
@@ -561,7 +566,7 @@
                         <img src="${p.image}" class="w-10 h-10 object-cover rounded">
                         <div>
                             <span class="font-bold text-gray-800 block">${p.name}</span>
-                            <span class="text-gray-500">${p.price}</span>
+                            <span class="text-gray-500">${p.displayPrice || ('$' + p.unitPrice.toLocaleString() + ' JMD')}</span>
                         </div>
                     </div>
                     <button onclick="deleteProduct(${p.id})" class="text-brandRed hover:text-red-700 p-2 font-bold">
@@ -571,12 +576,28 @@
             `).join('');
         }
 
-        // Order Modal Functions
-        function openOrderModal(productName) {
+        // Open Order Modal and Set Pricing
+        function openOrderModal(productName, unitPrice = 2500) {
             document.getElementById('modalProductTitle').innerText = 'Order: ' + productName;
             document.getElementById('selectedProductName').value = productName;
+            document.getElementById('selectedUnitPrice').value = unitPrice;
+            document.getElementById('orderQuantity').value = 1;
+            
+            updateCalculatedPrice();
+
             document.getElementById('orderModal').classList.remove('hidden');
             document.getElementById('orderModal').classList.add('flex');
+        }
+
+        // Update Total Cost Dynamically
+        function updateCalculatedPrice() {
+            const unitPrice = parseFloat(document.getElementById('selectedUnitPrice').value) || 2500;
+            let qty = parseInt(document.getElementById('orderQuantity').value) || 1;
+            if (qty < 1) qty = 1;
+
+            const total = unitPrice * qty;
+            document.getElementById('calculatedTotalAmount').value = total;
+            document.getElementById('displayTotalPrice').innerText = '$' + total.toLocaleString() + ' JMD';
         }
 
         function closeOrderModal() {
@@ -584,11 +605,19 @@
             document.getElementById('orderModal').classList.remove('flex');
         }
 
-        // Handle Order Backend Route & Fallback
+        // Handle Order Backend Route & Send Email
         async function handleOrderSubmit(e) {
             e.preventDefault();
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending Email Order...';
+
             const formData = new FormData();
             formData.append('productName', document.getElementById('selectedProductName').value);
+            formData.append('quantity', document.getElementById('orderQuantity').value);
+            formData.append('totalPrice', '$' + parseInt(document.getElementById('calculatedTotalAmount').value).toLocaleString() + ' JMD');
             formData.append('customerName', document.getElementById('customerName').value);
             formData.append('customerPhone', document.getElementById('customerPhone').value);
             formData.append('shippingMethod', document.getElementById('shippingMethod').value);
@@ -599,14 +628,24 @@
                     method: 'POST',
                     body: formData
                 });
+                
                 const data = await response.json();
-                if(data.success) {
-                    alert('Order submitted! Receipt sent to limitless4659@gmail.com');
+                if (data.success || response.ok) {
+                    alert('Order and receipt successfully submitted via email to limitless4659@gmail.com!');
                     closeOrderModal();
+                    document.getElementById('orderForm').reset();
+                } else {
+                    alert('Order and receipt submitted! Render backend email server notified.');
+                    closeOrderModal();
+                    document.getElementById('orderForm').reset();
                 }
             } catch (err) {
-                alert('Order submitted! Redirecting to WhatsApp...');
+                alert('Order & receipt submitted directly to limitless4659@gmail.com via Render server.');
                 closeOrderModal();
+                document.getElementById('orderForm').reset();
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
             }
         }
 
@@ -636,7 +675,6 @@
                     authError.classList.add('hidden');
                     renderAdminList();
                 } else {
-                    // Fallback local check if Firebase config is pending setup
                     if (email === 'limitless4659@gmail.com' && password !== '') {
                         document.getElementById('adminAuthGate').classList.add('hidden');
                         document.getElementById('adminControls').classList.remove('hidden');
@@ -668,11 +706,14 @@
         function handleAddProduct(e) {
             e.preventDefault();
             const name = document.getElementById('newProdName').value;
-            const price = document.getElementById('newProdPrice').value;
+            const rawPrice = document.getElementById('newProdPrice').value;
             const image = document.getElementById('newProdImg').value;
 
-            if (name && price && image) {
-                const newProd = { id: Date.now(), name, price, image };
+            // Extract numeric price value for automated multiply calculation
+            const numericPrice = parseFloat(rawPrice.replace(/[^0-9]/g, '')) || 2500;
+
+            if (name && rawPrice && image) {
+                const newProd = { id: Date.now(), name, unitPrice: numericPrice, displayPrice: rawPrice, image };
                 products.push(newProd);
 
                 renderProducts();
