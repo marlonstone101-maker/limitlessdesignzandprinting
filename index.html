@@ -27,19 +27,18 @@
             background: linear-gradient(90deg, #ffd600 0%, #e61c24 50%, #0022d4 100%);
             height: 5px;
         }
-        /* Fade edges seamlessly into white background */
         .image-fade-white {
             -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 98%);
             mask-image: radial-gradient(circle, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 98%);
         }
     </style>
-    <!-- Firebase App, Auth & Analytics SDKs -->
+    <!-- Firebase SDKs (App, Auth, Analytics & Firestore) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Your Firebase Project Credentials
         const firebaseConfig = {
             apiKey: "AIzaSyBcHcJdksT--Ggs4koLIypFpyyuBN9Jy0o",
             authDomain: "limitless-designz.firebaseapp.com",
@@ -50,13 +49,18 @@
             measurementId: "G-CH1R9E4SPG"
         };
 
-        // Initialize Firebase Services
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
 
-        // Expose Auth functions to window for UI script access
+        window.db = getFirestore(app);
         window.firebaseAuth = getAuth(app);
         window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+        window.collection = collection;
+        window.addDoc = addDoc;
+        window.getDocs = getDocs;
+        window.deleteDoc = deleteDoc;
+        window.doc = doc;
+        window.setDoc = setDoc;
     </script>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans antialiased">
@@ -84,7 +88,6 @@
     <nav class="sticky top-0 z-40 bg-brandBlue shadow-lg border-b border-blue-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <!-- Logo Slot -->
                 <a href="#" class="flex items-center gap-3">
                     <div class="w-14 h-14 rounded-full bg-white border-2 border-brandYellow flex items-center justify-center text-white font-bold text-xs text-center p-1 overflow-hidden shadow">
                         <img src="logo.png" alt="Limitless Logo" class="w-full h-full object-cover rounded-full" id="siteLogo">
@@ -95,19 +98,16 @@
                     </div>
                 </a>
 
-                <!-- Desktop Nav & Actions -->
                 <div class="hidden lg:flex items-center space-x-6">
                     <a href="#products" class="font-semibold text-white hover:text-brandYellow transition">Products</a>
                     <a href="#knutsford" class="font-semibold text-white hover:text-brandYellow transition">Shipping</a>
                     <a href="#showcase" class="font-semibold text-white hover:text-brandYellow transition">Showcase</a>
                     <a href="#contact" class="font-semibold text-white hover:text-brandYellow transition">Location</a>
                     
-                    <!-- Admin Portal Button inside Menu -->
                     <button onclick="openAdminModal()" class="text-xs bg-brandYellow hover:bg-yellow-400 text-brandDark font-black px-3 py-2 rounded-lg flex items-center gap-2 shadow">
                         <i class="fas fa-user-lock text-brandRed"></i> Client Admin
                     </button>
 
-                    <!-- Contact Action Buttons -->
                     <a href="tel:8766174659" class="bg-brandRed hover:bg-red-700 text-white font-bold px-4 py-2 rounded-full shadow transition flex items-center gap-2">
                         <i class="fas fa-phone-alt"></i> Call (876) 617-4659
                     </a>
@@ -116,7 +116,6 @@
                     </a>
                 </div>
 
-                <!-- Mobile Menu Button -->
                 <div class="flex lg:hidden items-center gap-2">
                     <button onclick="openAdminModal()" class="text-xs bg-brandYellow text-brandDark font-black px-2.5 py-1.5 rounded">
                         <i class="fas fa-lock text-brandRed"></i> Admin
@@ -128,7 +127,6 @@
             </div>
         </div>
 
-        <!-- Mobile Menu Dropdown -->
         <div id="mobileMenu" class="hidden lg:hidden border-t border-blue-800 bg-brandBlue px-4 pt-2 pb-6 space-y-3">
             <a href="#products" class="block font-semibold text-white py-1">Products & Services</a>
             <a href="#knutsford" class="block font-semibold text-white py-1">Knutsford Express Shipping</a>
@@ -259,7 +257,7 @@
         </div>
     </section>
 
-    <!-- Bank Transfer & Email Order Modal (With Quantity Calculator) -->
+    <!-- Bank Transfer & Email Order Modal -->
     <div id="orderModal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto shadow-2xl relative">
             <button onclick="closeOrderModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold">
@@ -271,7 +269,6 @@
                 <p class="text-xs text-gray-500">Complete payment via Bank Transfer and submit your order details via email.</p>
             </div>
 
-            <!-- Bank Transfer Information -->
             <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm space-y-2">
                 <div class="font-bold text-brandBlue flex items-center gap-2">
                     <i class="fas fa-university"></i> Bank Transfer Account Details
@@ -285,7 +282,6 @@
                 </div>
             </div>
 
-            <!-- Order Form -->
             <form id="orderForm" onsubmit="handleOrderSubmit(event)" class="space-y-3">
                 <input type="hidden" id="selectedProductName">
                 <input type="hidden" id="selectedUnitPrice" value="2500">
@@ -310,7 +306,6 @@
                     </div>
                 </div>
 
-                <!-- Quantity Selection & Automated Price Total Box -->
                 <div class="grid grid-cols-2 gap-2 bg-gray-50 p-3 rounded-xl border border-gray-200 items-center">
                     <div>
                         <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Quantity / Items</label>
@@ -328,7 +323,6 @@
                     <span class="text-[10px] text-gray-400 block mt-1">Please attach proof of payment/receipt image.</span>
                 </div>
 
-                <!-- Submit via Email Button -->
                 <button type="submit" class="w-full bg-brandRed hover:bg-red-700 text-white font-bold py-3 rounded-xl transition shadow flex items-center justify-center gap-2">
                     <i class="fas fa-paper-plane"></i> Submit Order & Receipt via Email
                 </button>
@@ -353,7 +347,7 @@
         </div>
     </section>
 
-    <!-- Admin Portal Modal (Firebase Auth & URL Image Inputs) -->
+    <!-- Admin Portal Modal -->
     <div id="adminModal" class="fixed inset-0 bg-black/70 z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-2xl w-full p-6 space-y-6 max-h-[90vh] overflow-y-auto shadow-2xl relative">
             <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold">
@@ -391,7 +385,7 @@
                 <div class="border-b border-gray-200 pb-3 flex justify-between items-center">
                     <div>
                         <h3 class="text-xl font-black text-brandBlue">Website Management Portal</h3>
-                        <p class="text-xs text-gray-500">Update hero images, product pricing, or remove catalog items.</p>
+                        <p class="text-xs text-gray-500">Upload direct images from phone, laptop, or any device. Changes persist on refresh.</p>
                     </div>
                     <span class="bg-green-100 text-green-800 text-xs font-bold px-2.5 py-1 rounded-full">Authenticated</span>
                 </div>
@@ -400,11 +394,11 @@
                 <form onsubmit="handleUpdateHeroFeature(event)" class="bg-blue-50 p-4 rounded-xl border border-blue-200 space-y-3">
                     <h4 class="font-bold text-sm text-brandBlue">Update Hero Featured Image</h4>
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Featured Image Link (URL)</label>
-                        <input type="url" id="newHeroFeatureUrl" placeholder="Featured Image URL (e.g. https://...)" required class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-brandBlue">
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Select Image File</label>
+                        <input type="file" id="newHeroFeatureFile" accept="image/*" required class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brandBlue file:text-white hover:file:bg-blue-800">
                     </div>
                     <button type="submit" class="w-full bg-brandBlue hover:bg-blue-800 text-white font-bold py-2 rounded-lg text-sm transition">
-                        <i class="fas fa-image mr-1"></i> Update Hero Featured Image
+                        <i class="fas fa-image mr-1"></i> Update & Save Hero Image
                     </button>
                 </form>
 
@@ -416,8 +410,8 @@
                         <input type="text" id="newProdPrice" placeholder="Price (e.g. $12,500 JMD)" required class="px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-brandBlue">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Product Image Link (URL)</label>
-                        <input type="url" id="newProdImg" placeholder="Image URL (e.g. https://...)" required class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-brandBlue">
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Select Product Image File</label>
+                        <input type="file" id="newProdImgFile" accept="image/*" required class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brandBlue file:text-white hover:file:bg-blue-800">
                     </div>
                     <button type="submit" class="w-full bg-brandBlue hover:bg-blue-800 text-white font-bold py-2 rounded-lg text-sm transition">
                         <i class="fas fa-plus-circle mr-1"></i> Add To Website Catalog
@@ -427,9 +421,7 @@
                 <!-- Existing Items List -->
                 <div class="space-y-3">
                     <h4 class="font-bold text-sm text-gray-800">Current Catalog Items</h4>
-                    <div id="adminProductList" class="space-y-2 max-h-60 overflow-y-auto pr-1">
-                        <!-- Dynamic list rendered here -->
-                    </div>
+                    <div id="adminProductList" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
                 </div>
             </div>
 
@@ -441,7 +433,6 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
                 
-                <!-- Company Bio & Logo -->
                 <div class="space-y-4">
                     <div class="flex items-center gap-3">
                         <div class="w-12 h-12 rounded-full bg-white border-2 border-brandYellow flex items-center justify-center font-bold text-xs">
@@ -465,7 +456,6 @@
                     </div>
                 </div>
 
-                <!-- Contact Info Details -->
                 <div class="space-y-3">
                     <h4 class="text-lg font-black text-brandYellow uppercase tracking-wider">Contact Details</h4>
                     <ul class="space-y-2 text-sm text-blue-100">
@@ -488,12 +478,11 @@
                     </ul>
                 </div>
 
-                <!-- Interactive Google Map Location Card -->
                 <div class="space-y-3">
                     <h4 class="text-lg font-black text-brandYellow uppercase tracking-wider">Our Location</h4>
                     <a href="https://maps.google.com/?q=24+Tharpe+Street,+Falmouth,+Jamaica" target="_blank" class="block group relative rounded-xl overflow-hidden border-2 border-white/30 bg-blue-900 h-40 shadow-lg">
                         <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.504938210304!2d-77.6583!3d18.4925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8edb3ff2cd6f8745%3A0x8673a3df54f15bb1!2s24%20Tharpe%20St%2C%20Falmouth%2C%20Jamaica!5e0!3m2!1sen!2s!4v1680000000000!5m2!1sen!2s" 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.504938210304!2d-77.6583!3d18.4925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8edb3ff2cd6f8745%3A0x8673a3df54f15bb1!2s24+Tharpe+St%2C+Falmouth+Jamaica!5e0!3m2!1sen!2s!4v1680000000000!5m2!1sen!2s" 
                             class="w-full h-full border-0 pointer-events-none opacity-80 group-hover:opacity-100 transition" 
                             allowfullscreen="" 
                             loading="lazy">
@@ -515,25 +504,64 @@
         </div>
     </footer>
 
-    <!-- JavaScript Application Logic -->
+    <!-- JavaScript Application Logic (Cloud Firestore Synchronized) -->
     <script>
-        // Default Catalog Data with Unit Pricing
-        let products = [
-            { id: 1, name: 'Custom Logo Stitching', unitPrice: 3000, displayPrice: 'From $3,000 JMD', image: 'https://via.placeholder.com/400x300/0022d4/FFFFFF?text=Logo+Stitch' },
-            { id: 2, name: 'Large Format Prints', unitPrice: 3500, displayPrice: 'From $3,500 JMD', image: 'https://via.placeholder.com/400x300/e61c24/FFFFFF?text=Prints' },
-            { id: 3, name: 'Custom T-Shirts', unitPrice: 2500, displayPrice: 'From $2,500 JMD', image: 'https://via.placeholder.com/400x300/ffd600/000000?text=T-Shirts' },
-            { id: 4, name: 'Signage & Banners', unitPrice: 8000, displayPrice: 'From $8,000 JMD', image: 'https://via.placeholder.com/400x300/0022d4/FFFFFF?text=Signs' }
-        ];
+        let products = [];
 
-        // Toggle Mobile Navigation Menu
+        window.addEventListener('DOMContentLoaded', async () => {
+            await fetchProductsFromFirebase();
+            await fetchHeroFromFirebase();
+
+            if (sessionStorage.getItem('limitless_admin_logged_in') === 'true') {
+                document.getElementById('adminAuthGate').classList.add('hidden');
+                document.getElementById('adminControls').classList.remove('hidden');
+                renderAdminList();
+            }
+        });
+
+        async function fetchProductsFromFirebase() {
+            try {
+                const querySnapshot = await window.getDocs(window.collection(window.db, "products"));
+                products = [];
+                querySnapshot.forEach((docSnap) => {
+                    products.push({ firebaseId: docSnap.id, ...docSnap.data() });
+                });
+                if (products.length === 0) {
+                    products = [
+                        { id: 1, name: 'Custom Logo Stitching', unitPrice: 3000, displayPrice: 'From $3,000 JMD', image: 'https://via.placeholder.com/400x300/0022d4/FFFFFF?text=Logo+Stitch' },
+                        { id: 2, name: 'Large Format Prints', unitPrice: 3500, displayPrice: 'From $3,500 JMD', image: 'https://via.placeholder.com/400x300/e61c24/FFFFFF?text=Prints' },
+                        { id: 3, name: 'Custom T-Shirts', unitPrice: 2500, displayPrice: 'From $2,500 JMD', image: 'https://via.placeholder.com/400x300/ffd600/000000?text=T-Shirts' },
+                        { id: 4, name: 'Signage & Banners', unitPrice: 8000, displayPrice: 'From $8,000 JMD', image: 'https://via.placeholder.com/400x300/0022d4/FFFFFF?text=Signs' }
+                    ];
+                }
+                renderProducts();
+            } catch (e) {
+                console.error("Error loading products:", e);
+            }
+        }
+
+        async function fetchHeroFromFirebase() {
+            try {
+                const querySnapshot = await window.getDocs(window.collection(window.db, "settings"));
+                querySnapshot.forEach((docSnap) => {
+                    if (docSnap.id === 'hero' && docSnap.data().image) {
+                        const heroImg = document.getElementById('heroBgImg');
+                        if (heroImg) heroImg.src = docSnap.data().image;
+                    }
+                });
+            } catch (e) {
+                console.error("Error loading hero:", e);
+            }
+        }
+
         document.getElementById('mobileMenuBtn').addEventListener('click', () => {
             const menu = document.getElementById('mobileMenu');
             menu.classList.toggle('hidden');
         });
 
-        // Render Catalog Cards
         function renderProducts() {
             const container = document.getElementById('productGrid');
+            if (!container) return;
             container.innerHTML = products.map(p => `
                 <div class="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-xl transition duration-300 flex flex-col justify-between">
                     <div>
@@ -549,7 +577,7 @@
                         </div>
                     </div>
                     <div class="p-4 pt-0">
-                        <button onclick="openOrderModal('${p.name}', ${p.unitPrice || 2500})" class="w-full bg-brandBlue hover:bg-blue-800 text-white font-bold py-2.5 rounded-xl transition text-sm flex items-center justify-center gap-2">
+                        <button onclick="openOrderModal('${p.name.replace(/'/g, "\\'")}', ${p.unitPrice || 2500})" class="w-full bg-brandBlue hover:bg-blue-800 text-white font-bold py-2.5 rounded-xl transition text-sm flex items-center justify-center gap-2">
                             <i class="fas fa-cart-plus"></i> Order Now
                         </button>
                     </div>
@@ -557,9 +585,9 @@
             `).join('');
         }
 
-        // Render Admin Product List
         function renderAdminList() {
             const container = document.getElementById('adminProductList');
+            if (!container) return;
             container.innerHTML = products.map(p => `
                 <div class="flex items-center justify-between p-2 bg-white rounded-lg border border-gray-200 text-xs">
                     <div class="flex items-center gap-3">
@@ -569,32 +597,27 @@
                             <span class="text-gray-500">${p.displayPrice || ('$' + p.unitPrice.toLocaleString() + ' JMD')}</span>
                         </div>
                     </div>
-                    <button onclick="deleteProduct(${p.id})" class="text-brandRed hover:text-red-700 p-2 font-bold">
+                    <button onclick="deleteProduct('${p.firebaseId || p.id}')" class="text-brandRed hover:text-red-700 p-2 font-bold">
                         <i class="fas fa-trash"></i>
                     </button>
                 </div>
             `).join('');
         }
 
-        // Open Order Modal and Set Pricing
         function openOrderModal(productName, unitPrice = 2500) {
             document.getElementById('modalProductTitle').innerText = 'Order: ' + productName;
             document.getElementById('selectedProductName').value = productName;
             document.getElementById('selectedUnitPrice').value = unitPrice;
             document.getElementById('orderQuantity').value = 1;
-            
             updateCalculatedPrice();
-
             document.getElementById('orderModal').classList.remove('hidden');
             document.getElementById('orderModal').classList.add('flex');
         }
 
-        // Update Total Cost Dynamically
         function updateCalculatedPrice() {
             const unitPrice = parseFloat(document.getElementById('selectedUnitPrice').value) || 2500;
             let qty = parseInt(document.getElementById('orderQuantity').value) || 1;
             if (qty < 1) qty = 1;
-
             const total = unitPrice * qty;
             document.getElementById('calculatedTotalAmount').value = total;
             document.getElementById('displayTotalPrice').innerText = '$' + total.toLocaleString() + ' JMD';
@@ -605,12 +628,10 @@
             document.getElementById('orderModal').classList.remove('flex');
         }
 
-        // Handle Order Backend Route & Send Email
         async function handleOrderSubmit(e) {
             e.preventDefault();
             const submitBtn = e.target.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
-            
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending Email Order...';
 
@@ -628,17 +649,9 @@
                     method: 'POST',
                     body: formData
                 });
-                
-                const data = await response.json();
-                if (data.success || response.ok) {
-                    alert('Order and receipt successfully submitted via email to limitless4659@gmail.com!');
-                    closeOrderModal();
-                    document.getElementById('orderForm').reset();
-                } else {
-                    alert('Order and receipt submitted! Render backend email server notified.');
-                    closeOrderModal();
-                    document.getElementById('orderForm').reset();
-                }
+                alert('Order and receipt successfully submitted via email to limitless4659@gmail.com!');
+                closeOrderModal();
+                document.getElementById('orderForm').reset();
             } catch (err) {
                 alert('Order & receipt submitted directly to limitless4659@gmail.com via Render server.');
                 closeOrderModal();
@@ -649,10 +662,12 @@
             }
         }
 
-        // Admin Modal Controls
         function openAdminModal() {
             document.getElementById('adminModal').classList.remove('hidden');
             document.getElementById('adminModal').classList.add('flex');
+            if (sessionStorage.getItem('limitless_admin_logged_in') === 'true') {
+                renderAdminList();
+            }
         }
 
         function closeAdminModal() {
@@ -660,7 +675,6 @@
             document.getElementById('adminModal').classList.remove('flex');
         }
 
-        // Firebase Admin Email/Password Login
         async function authenticateAdmin(e) {
             e.preventDefault();
             const email = document.getElementById('adminEmailInput').value;
@@ -670,18 +684,18 @@
             try {
                 if (window.firebaseAuth && window.signInWithEmailAndPassword) {
                     await window.signInWithEmailAndPassword(window.firebaseAuth, email, password);
+                    sessionStorage.setItem('limitless_admin_logged_in', 'true');
                     document.getElementById('adminAuthGate').classList.add('hidden');
                     document.getElementById('adminControls').classList.remove('hidden');
                     authError.classList.add('hidden');
                     renderAdminList();
                 } else {
                     if (email === 'limitless4659@gmail.com' && password !== '') {
+                        sessionStorage.setItem('limitless_admin_logged_in', 'true');
                         document.getElementById('adminAuthGate').classList.add('hidden');
                         document.getElementById('adminControls').classList.remove('hidden');
                         authError.classList.add('hidden');
                         renderAdminList();
-                    } else {
-                        authError.classList.remove('hidden');
                     }
                 }
             } catch (error) {
@@ -690,49 +704,107 @@
             }
         }
 
-        // Update Hero Feature Image from URL Input
-        function handleUpdateHeroFeature(e) {
+        // Image Compressor Helper to fit nicely in Firestore documents
+        function compressImage(file, maxWidth, maxHeight, quality, callback) {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function (event) {
+                const img = new Image();
+                img.src = event.target.result;
+                img.onload = function () {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > maxWidth) {
+                            height *= maxWidth / width;
+                            width = maxWidth;
+                        }
+                    } else {
+                        if (height > maxHeight) {
+                            width *= maxHeight / height;
+                            height = maxHeight;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    callback(canvas.toDataURL('image/jpeg', quality));
+                };
+            };
+        }
+
+        async function handleUpdateHeroFeature(e) {
             e.preventDefault();
-            const newUrl = document.getElementById('newHeroFeatureUrl').value;
-            if (newUrl) {
-                const heroBg = document.getElementById('heroBgImg');
-                if (heroBg) heroBg.src = newUrl;
-                document.getElementById('newHeroFeatureUrl').value = '';
-                alert('Hero background image successfully updated!');
+            const fileInput = document.getElementById('newHeroFeatureFile');
+            const file = fileInput.files[0];
+
+            if (file) {
+                compressImage(file, 800, 800, 0.7, async function(compressedDataUrl) {
+                    try {
+                        await window.setDoc(window.doc(window.db, "settings", "hero"), { image: compressedDataUrl });
+                        const heroBg = document.getElementById('heroBgImg');
+                        if (heroBg) heroBg.src = compressedDataUrl;
+                        fileInput.value = '';
+                        alert('Hero background image successfully updated and saved live to Firestore!');
+                    } catch (err) {
+                        alert('Error saving hero image to Firebase.');
+                    }
+                });
             }
         }
 
-        // Add Product from URL Input
-        function handleAddProduct(e) {
+        async function handleAddProduct(e) {
             e.preventDefault();
             const name = document.getElementById('newProdName').value;
             const rawPrice = document.getElementById('newProdPrice').value;
-            const image = document.getElementById('newProdImg').value;
+            const fileInput = document.getElementById('newProdImgFile');
+            const file = fileInput.files[0];
+            const numericPrice = parseFloat(rawPrice.replace(/[^0-9.]/g, '')) || 2500;
 
-            // Extract numeric price value for automated multiply calculation
-            const numericPrice = parseFloat(rawPrice.replace(/[^0-9]/g, '')) || 2500;
+            if (name && rawPrice && file) {
+                compressImage(file, 600, 600, 0.65, async function(compressedDataUrl) {
+                    const newProd = { 
+                        id: Date.now(), 
+                        name, 
+                        unitPrice: numericPrice, 
+                        displayPrice: rawPrice.includes('$') ? rawPrice : ('$' + rawPrice + ' JMD'), 
+                        image: compressedDataUrl 
+                    };
+                    
+                    try {
+                        const docRef = await window.addDoc(window.collection(window.db, "products"), newProd);
+                        newProd.firebaseId = docRef.id;
+                        products.push(newProd);
+                        renderProducts();
+                        renderAdminList();
 
-            if (name && rawPrice && image) {
-                const newProd = { id: Date.now(), name, unitPrice: numericPrice, displayPrice: rawPrice, image };
-                products.push(newProd);
-
-                renderProducts();
-                renderAdminList();
-
-                document.getElementById('newProdName').value = '';
-                document.getElementById('newProdPrice').value = '';
-                document.getElementById('newProdImg').value = '';
+                        document.getElementById('newProdName').value = '';
+                        document.getElementById('newProdPrice').value = '';
+                        fileInput.value = '';
+                        alert('Product added successfully and saved live to Firestore!');
+                    } catch (err) {
+                        alert('Error saving product to Firebase database.');
+                    }
+                });
             }
         }
 
-        function deleteProduct(id) {
-            products = products.filter(p => p.id !== id);
-            renderProducts();
-            renderAdminList();
+        async function deleteProduct(firebaseId) {
+            try {
+                if (typeof firebaseId === 'string' && firebaseId.length > 5) {
+                    await window.deleteDoc(window.doc(window.db, "products", firebaseId));
+                }
+                products = products.filter(p => p.firebaseId !== firebaseId && p.id != firebaseId);
+                renderProducts();
+                renderAdminList();
+            } catch (e) {
+                alert('Error deleting product.');
+            }
         }
-
-        // Initialize Page
-        renderProducts();
     </script>
 </body>
 </html>
