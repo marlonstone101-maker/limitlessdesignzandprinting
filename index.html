@@ -240,22 +240,32 @@
     </section>
 
     <!-- Products & Interactive Catalog Section -->
-    <section id="products" class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+    <section id="products" class="py-12 sm:py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 space-y-8">
             
             <div class="text-center max-w-2xl mx-auto space-y-2">
-                <span class="text-brandRed font-black uppercase text-sm tracking-wider">Quality Printing Services</span>
-                <h2 class="text-3xl sm:text-4xl font-black text-gray-900">Featured Products & Showcase</h2>
-                <p class="text-gray-600">Select any product to start an instant order with direct bank receipt upload features.</p>
+                <span class="text-brandRed font-black uppercase text-xs sm:text-sm tracking-wider">Quality Printing Services</span>
+                <h2 class="text-2xl sm:text-4xl font-black text-gray-900">Featured Products & Showcase</h2>
+                <p class="text-xs sm:text-base text-gray-600">Select any product to start an instant order with direct bank receipt upload features.</p>
             </div>
 
-            <!-- Product Grid -->
-            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Product Grid - 2 columns on mobile/tablet, 4 columns on large screens -->
+            <div id="productGrid" class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
                 <!-- Products loaded dynamically via JS -->
             </div>
 
         </div>
     </section>
+
+    <!-- Clickable Image Zoom Modal -->
+    <div id="imageZoomModal" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4" onclick="closeImageZoom()">
+        <div class="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center" onclick="event.stopPropagation()">
+            <button onclick="closeImageZoom()" class="absolute -top-10 right-0 sm:-right-4 text-white hover:text-brandYellow text-2xl font-bold bg-black/50 w-10 h-10 rounded-full flex items-center justify-center">
+                <i class="fas fa-times"></i>
+            </button>
+            <img id="zoomedImageEl" src="#" alt="Zoomed Product" class="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl border-2 border-white/20 bg-black">
+        </div>
+    </div>
 
     <!-- Bank Transfer & Email Order Modal -->
     <div id="orderModal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4">
@@ -340,8 +350,8 @@
             </div>
 
             <div class="max-w-sm sm:max-w-md mx-auto flex justify-center">
-                <div class="rounded-2xl overflow-hidden shadow-lg border border-gray-200 bg-white">
-                    <img id="showcaseImg" src="image2.jpg" alt="Showcase Image" class="w-full h-auto max-h-[500px] object-contain block">
+                <div class="rounded-2xl overflow-hidden shadow-lg border border-gray-200 bg-white cursor-pointer" onclick="openImageZoom('image2.jpg')">
+                    <img id="showcaseImg" src="image2.jpg" alt="Showcase Image" class="w-full h-auto max-h-[500px] object-contain block hover:scale-105 transition duration-300">
                 </div>
             </div>
         </div>
@@ -563,26 +573,39 @@
             const container = document.getElementById('productGrid');
             if (!container) return;
             container.innerHTML = products.map(p => `
-                <div class="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-xl transition duration-300 flex flex-col justify-between">
+                <div class="bg-white rounded-xl sm:rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-xl transition duration-300 flex flex-col justify-between">
                     <div>
-                        <div class="h-48 bg-gray-100 overflow-hidden relative">
-                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">
-                            <span class="absolute top-2 right-2 bg-brandYellow text-gray-900 text-xs font-black px-2.5 py-1 rounded-full shadow">
+                        <div class="h-36 sm:h-48 bg-gray-100 overflow-hidden relative cursor-pointer" onclick="openImageZoom('${p.image.replace(/'/g, "\\'")}')">
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover hover:scale-105 transition duration-300">
+                            <span class="absolute top-2 right-2 bg-brandYellow text-gray-900 text-[10px] sm:text-xs font-black px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full shadow">
                                 ${p.displayPrice || ('$' + p.unitPrice.toLocaleString() + ' JMD')}
                             </span>
                         </div>
-                        <div class="p-4 space-y-1">
-                            <h3 class="font-bold text-gray-900 text-lg">${p.name}</h3>
-                            <p class="text-xs text-gray-500">Premium quality design & print setup.</p>
+                        <div class="p-3 sm:p-4 space-y-1">
+                            <h3 class="font-bold text-gray-900 text-sm sm:text-lg line-clamp-1">${p.name}</h3>
+                            <p class="text-[11px] sm:text-xs text-gray-500 line-clamp-1">Premium quality design & print setup.</p>
                         </div>
                     </div>
-                    <div class="p-4 pt-0">
-                        <button onclick="openOrderModal('${p.name.replace(/'/g, "\\'")}', ${p.unitPrice || 2500})" class="w-full bg-brandBlue hover:bg-blue-800 text-white font-bold py-2.5 rounded-xl transition text-sm flex items-center justify-center gap-2">
+                    <div class="p-3 sm:p-4 pt-0">
+                        <button onclick="openOrderModal('${p.name.replace(/'/g, "\\'")}', ${p.unitPrice || 2500})" class="w-full bg-brandBlue hover:bg-blue-800 text-white font-bold py-2 sm:py-2.5 rounded-lg sm:rounded-xl transition text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2">
                             <i class="fas fa-cart-plus"></i> Order Now
                         </button>
                     </div>
                 </div>
             `).join('');
+        }
+
+        function openImageZoom(imgSrc) {
+            document.getElementById('zoomedImageEl').src = imgSrc;
+            const modal = document.getElementById('imageZoomModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeImageZoom() {
+            const modal = document.getElementById('imageZoomModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
         }
 
         function renderAdminList() {
