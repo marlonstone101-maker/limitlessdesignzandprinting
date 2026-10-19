@@ -22,7 +22,8 @@ if (!fs.existsSync(uploadsDir)) {
 
 // Serve uploaded images publicly
 app.use('/uploads', express.static(uploadsDir));
-
+// Serve static frontend files from root directory
+app.use(express.static(__dirname));
 // Configure Multer Storage for Uploaded Images
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -123,7 +124,7 @@ app.post('/api/admin/upload-image', upload.single('adminImage'), (req, res) => {
 
 // Health check endpoint for Render
 app.get('/', (req, res) => {
-    res.send('Limitless Designz & Printing Ltd Backend API Server is Running');
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Start Server
